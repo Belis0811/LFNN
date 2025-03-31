@@ -87,7 +87,7 @@ direct to 'BrainAge' folder
 ```
 cd LFNN/model/LFNN-BPFree/BrainAge
 ```
-**Because our data is too big, github cannot hold such big files. We provided the Google Drive link that contains sample data npy files. You could find the link under [LFNN/model/LFNN-BPFree/BrainAge/data_download.txt](https://github.com/Belis0811/LFNN/tree/main/model/LFNN-BPfree/BrainAge/data/data_download.txt)**
+**Because our data is too big, github cannot hold such big files. We provided the Google Drive link that contains sample data npy files. You could find the link under [LFNN/model/LFNN-BPFree/BrainAge/data/data_download.txt](https://drive.google.com/drive/folders/1NQ4V68W72q-OPbDHB_--oh1_Gomkzr7l?usp=sharing)**
 
 Train our LFNN model with 'train_BP_free.py'
 ```
