@@ -1,5 +1,6 @@
 #### Requirements
 * **Python** 3.8+
+* **Tensorflow** 1.15+
 * **PyTorch** 2.0.0+
 * **torchvision** 0.15.0+
 *  **NumPy**,**scikit-image**,**matplotlib**,etc
