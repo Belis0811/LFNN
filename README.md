@@ -20,9 +20,13 @@ Our LFNN codes can be run properly in Google Colab with the links below:
 [MNIST_LFNN](https://colab.research.google.com/github/Belis0811/LFNN/blob/main/model/LFNN/MNIST_LFNN.ipynb)
 
 A more detailed version can be found at links below:
+
 [Cifar10_LFNN_Detailed](https://colab.research.google.com/github/Belis0811/LFNN/blob/main/model/LFNN/Cifar10_LFNN_detailed.ipynb)
+
 [MNIST_LFNN_Detailed](https://colab.research.google.com/github/Belis0811/LFNN/blob/main/model/LFNN/MNIST_LFNN_detailed.ipynb)
+
 [ImageNet_LFNN Detailed](https://colab.research.google.com/github/Belis0811/LFNN/blob/main/model/LFNN/ImageNet_LFNN_detailed.ipynb)
+
 
 #### 2. LFNN-BPfree
 Our LFNN-BPfree codes can be run properly in Google Colab with the links below:
