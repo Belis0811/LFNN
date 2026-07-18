@@ -1,0 +1,802 @@
+Resnet101_4out:
+Epoch: 0
+Train Loss: 2.654 | Acc: 14.142% (7071/50000)
+Test Loss: 2.341 | Acc: 13.670% (1367/10000)
+
+Epoch: 1
+Train Loss: 1.952 | Acc: 26.590% (13295/50000)
+Test Loss: 1.838 | Acc: 33.290% (3329/10000)
+
+Epoch: 2
+Train Loss: 1.802 | Acc: 33.204% (16602/50000)
+Test Loss: 1.744 | Acc: 36.670% (3667/10000)
+
+Epoch: 3
+Train Loss: 1.708 | Acc: 37.098% (18549/50000)
+Test Loss: 1.854 | Acc: 34.490% (3449/10000)
+
+Epoch: 4
+Train Loss: 1.597 | Acc: 41.378% (20689/50000)
+Test Loss: 1.739 | Acc: 38.170% (3817/10000)
+
+Epoch: 5
+Train Loss: 1.473 | Acc: 46.124% (23062/50000)
+Test Loss: 1.543 | Acc: 46.080% (4608/10000)
+
+Epoch: 6
+Train Loss: 1.332 | Acc: 51.676% (25838/50000)
+Test Loss: 1.642 | Acc: 44.250% (4425/10000)
+
+Epoch: 7
+Train Loss: 1.180 | Acc: 57.446% (28723/50000)
+Test Loss: 1.410 | Acc: 52.210% (5221/10000)
+
+Epoch: 8
+Train Loss: 1.059 | Acc: 62.710% (31355/50000)
+Test Loss: 1.356 | Acc: 56.010% (5601/10000)
+
+Epoch: 9
+Train Loss: 0.945 | Acc: 66.564% (33282/50000)
+Test Loss: 1.425 | Acc: 56.290% (5629/10000)
+
+Epoch: 10
+Train Loss: 0.868 | Acc: 69.354% (34677/50000)
+Test Loss: 1.613 | Acc: 55.800% (5580/10000)
+
+Epoch: 11
+Train Loss: 0.791 | Acc: 72.254% (36127/50000)
+Test Loss: 0.957 | Acc: 67.880% (6788/10000)
+
+Epoch: 12
+Train Loss: 0.735 | Acc: 74.500% (37250/50000)
+Test Loss: 0.848 | Acc: 70.240% (7024/10000)
+
+Epoch: 13
+Train Loss: 0.687 | Acc: 76.100% (38050/50000)
+Test Loss: 0.981 | Acc: 67.650% (6765/10000)
+
+Epoch: 14
+Train Loss: 0.649 | Acc: 77.622% (38811/50000)
+Test Loss: 0.878 | Acc: 71.890% (7189/10000)
+
+Epoch: 15
+Train Loss: 0.616 | Acc: 78.502% (39251/50000)
+Test Loss: 0.728 | Acc: 75.720% (7572/10000)
+
+Epoch: 16
+Train Loss: 0.605 | Acc: 79.184% (39592/50000)
+Test Loss: 0.899 | Acc: 70.680% (7068/10000)
+
+Epoch: 17
+Train Loss: 0.574 | Acc: 80.284% (40142/50000)
+Test Loss: 0.997 | Acc: 68.140% (6814/10000)
+
+Epoch: 18
+Train Loss: 0.556 | Acc: 80.736% (40368/50000)
+Test Loss: 0.991 | Acc: 68.220% (6822/10000)
+
+Epoch: 19
+Train Loss: 0.548 | Acc: 81.178% (40589/50000)
+Test Loss: 0.703 | Acc: 76.790% (7679/10000)
+
+Epoch: 20
+Train Loss: 0.532 | Acc: 81.638% (40819/50000)
+Test Loss: 0.636 | Acc: 78.400% (7840/10000)
+
+Epoch: 21
+Train Loss: 0.521 | Acc: 82.138% (41069/50000)
+Test Loss: 0.911 | Acc: 71.970% (7197/10000)
+
+Epoch: 22
+Train Loss: 0.507 | Acc: 82.564% (41282/50000)
+Test Loss: 0.946 | Acc: 71.880% (7188/10000)
+
+Epoch: 23
+Train Loss: 0.510 | Acc: 82.510% (41255/50000)
+Test Loss: 0.714 | Acc: 75.970% (7597/10000)
+
+Epoch: 24
+Train Loss: 0.489 | Acc: 83.166% (41583/50000)
+Test Loss: 0.786 | Acc: 74.640% (7464/10000)
+
+Epoch: 25
+Train Loss: 0.484 | Acc: 83.510% (41755/50000)
+Test Loss: 0.719 | Acc: 76.490% (7649/10000)
+
+Epoch: 26
+Train Loss: 0.473 | Acc: 83.612% (41806/50000)
+Test Loss: 0.870 | Acc: 73.990% (7399/10000)
+
+Epoch: 27
+Train Loss: 0.473 | Acc: 83.820% (41910/50000)
+Test Loss: 0.635 | Acc: 78.100% (7810/10000)
+
+Epoch: 28
+Train Loss: 0.466 | Acc: 83.944% (41972/50000)
+Test Loss: 0.558 | Acc: 81.670% (8167/10000)
+
+Epoch: 29
+Train Loss: 0.451 | Acc: 84.488% (42244/50000)
+Test Loss: 0.609 | Acc: 79.750% (7975/10000)
+
+Epoch: 30
+Train Loss: 0.452 | Acc: 84.484% (42242/50000)
+Test Loss: 0.726 | Acc: 77.130% (7713/10000)
+
+Epoch: 31
+Train Loss: 0.442 | Acc: 85.004% (42502/50000)
+Test Loss: 0.597 | Acc: 79.490% (7949/10000)
+
+Epoch: 32
+Train Loss: 0.443 | Acc: 84.856% (42428/50000)
+Test Loss: 0.707 | Acc: 76.060% (7606/10000)
+
+Epoch: 33
+Train Loss: 0.430 | Acc: 85.378% (42689/50000)
+Test Loss: 0.578 | Acc: 80.670% (8067/10000)
+
+Epoch: 34
+Train Loss: 0.425 | Acc: 85.450% (42725/50000)
+Test Loss: 0.567 | Acc: 80.370% (8037/10000)
+
+Epoch: 35
+Train Loss: 0.426 | Acc: 85.414% (42707/50000)
+Test Loss: 0.747 | Acc: 75.010% (7501/10000)
+
+Epoch: 36
+Train Loss: 0.426 | Acc: 85.472% (42736/50000)
+Test Loss: 1.264 | Acc: 67.080% (6708/10000)
+
+Epoch: 37
+Train Loss: 0.413 | Acc: 85.834% (42917/50000)
+Test Loss: 0.744 | Acc: 76.090% (7609/10000)
+
+Epoch: 38
+Train Loss: 0.410 | Acc: 85.916% (42958/50000)
+Test Loss: 0.496 | Acc: 83.470% (8347/10000)
+
+Epoch: 39
+Train Loss: 0.406 | Acc: 86.070% (43035/50000)
+Test Loss: 0.710 | Acc: 77.080% (7708/10000)
+
+Epoch: 40
+Train Loss: 0.401 | Acc: 86.252% (43126/50000)
+Test Loss: 0.490 | Acc: 83.660% (8366/10000)
+
+Epoch: 41
+Train Loss: 0.394 | Acc: 86.424% (43212/50000)
+Test Loss: 0.941 | Acc: 72.600% (7260/10000)
+
+Epoch: 42
+Train Loss: 0.394 | Acc: 86.484% (43242/50000)
+Test Loss: 1.132 | Acc: 68.780% (6878/10000)
+
+Epoch: 43
+Train Loss: 0.392 | Acc: 86.552% (43276/50000)
+Test Loss: 0.722 | Acc: 76.950% (7695/10000)
+
+Epoch: 44
+Train Loss: 0.387 | Acc: 86.714% (43357/50000)
+Test Loss: 0.572 | Acc: 81.950% (8195/10000)
+
+Epoch: 45
+Train Loss: 0.385 | Acc: 86.724% (43362/50000)
+Test Loss: 0.762 | Acc: 75.790% (7579/10000)
+
+Epoch: 46
+Train Loss: 0.380 | Acc: 86.866% (43433/50000)
+Test Loss: 0.895 | Acc: 72.450% (7245/10000)
+
+Epoch: 47
+Train Loss: 0.374 | Acc: 87.264% (43632/50000)
+Test Loss: 0.782 | Acc: 75.310% (7531/10000)
+
+Epoch: 48
+Train Loss: 0.375 | Acc: 87.148% (43574/50000)
+Test Loss: 0.648 | Acc: 79.090% (7909/10000)
+
+Epoch: 49
+Train Loss: 0.374 | Acc: 87.108% (43554/50000)
+Test Loss: 0.650 | Acc: 79.580% (7958/10000)
+
+Epoch: 50
+Train Loss: 0.371 | Acc: 87.250% (43625/50000)
+Test Loss: 0.527 | Acc: 82.680% (8268/10000)
+
+Epoch: 51
+Train Loss: 0.366 | Acc: 87.444% (43722/50000)
+Test Loss: 0.697 | Acc: 78.320% (7832/10000)
+
+Epoch: 52
+Train Loss: 0.360 | Acc: 87.642% (43821/50000)
+Test Loss: 0.505 | Acc: 82.700% (8270/10000)
+
+Epoch: 53
+Train Loss: 0.362 | Acc: 87.472% (43736/50000)
+Test Loss: 0.516 | Acc: 82.890% (8289/10000)
+
+Epoch: 54
+Train Loss: 0.354 | Acc: 87.830% (43915/50000)
+Test Loss: 0.709 | Acc: 78.120% (7812/10000)
+
+Epoch: 55
+Train Loss: 0.351 | Acc: 87.982% (43991/50000)
+Test Loss: 0.711 | Acc: 78.390% (7839/10000)
+
+Epoch: 56
+Train Loss: 0.351 | Acc: 87.958% (43979/50000)
+Test Loss: 0.685 | Acc: 79.210% (7921/10000)
+
+Epoch: 57
+Train Loss: 0.350 | Acc: 88.038% (44019/50000)
+Test Loss: 0.598 | Acc: 80.920% (8092/10000)
+
+Epoch: 58
+Train Loss: 0.354 | Acc: 87.824% (43912/50000)
+Test Loss: 0.821 | Acc: 77.170% (7717/10000)
+
+Epoch: 59
+Train Loss: 0.339 | Acc: 88.330% (44165/50000)
+Test Loss: 0.592 | Acc: 81.600% (8160/10000)
+
+Epoch: 60
+Train Loss: 0.337 | Acc: 88.558% (44279/50000)
+Test Loss: 0.509 | Acc: 83.580% (8358/10000)
+
+Epoch: 61
+Train Loss: 0.339 | Acc: 88.460% (44230/50000)
+Test Loss: 0.464 | Acc: 84.610% (8461/10000)
+
+Epoch: 62
+Train Loss: 0.335 | Acc: 88.584% (44292/50000)
+Test Loss: 0.570 | Acc: 81.690% (8169/10000)
+
+Epoch: 63
+Train Loss: 0.334 | Acc: 88.564% (44282/50000)
+Test Loss: 0.537 | Acc: 82.270% (8227/10000)
+
+Epoch: 64
+Train Loss: 0.328 | Acc: 88.966% (44483/50000)
+Test Loss: 0.554 | Acc: 82.650% (8265/10000)
+
+Epoch: 65
+Train Loss: 0.329 | Acc: 88.708% (44354/50000)
+Test Loss: 0.651 | Acc: 79.900% (7990/10000)
+
+Epoch: 66
+Train Loss: 0.331 | Acc: 88.648% (44324/50000)
+Test Loss: 0.609 | Acc: 80.650% (8065/10000)
+
+Epoch: 67
+Train Loss: 0.324 | Acc: 89.018% (44509/50000)
+Test Loss: 0.530 | Acc: 83.420% (8342/10000)
+
+Epoch: 68
+Train Loss: 0.327 | Acc: 88.910% (44455/50000)
+Test Loss: 0.478 | Acc: 84.050% (8405/10000)
+
+Epoch: 69
+Train Loss: 0.315 | Acc: 89.438% (44719/50000)
+Test Loss: 0.598 | Acc: 81.680% (8168/10000)
+
+Epoch: 70
+Train Loss: 0.316 | Acc: 89.234% (44617/50000)
+Test Loss: 0.497 | Acc: 83.850% (8385/10000)
+
+Epoch: 71
+Train Loss: 0.316 | Acc: 89.276% (44638/50000)
+Test Loss: 0.604 | Acc: 80.330% (8033/10000)
+
+Epoch: 72
+Train Loss: 0.309 | Acc: 89.434% (44717/50000)
+Test Loss: 0.379 | Acc: 87.060% (8706/10000)
+
+Epoch: 73
+Train Loss: 0.308 | Acc: 89.466% (44733/50000)
+Test Loss: 0.476 | Acc: 84.570% (8457/10000)
+
+Epoch: 74
+Train Loss: 0.307 | Acc: 89.544% (44772/50000)
+Test Loss: 0.432 | Acc: 85.500% (8550/10000)
+
+Epoch: 75
+Train Loss: 0.306 | Acc: 89.656% (44828/50000)
+Test Loss: 0.576 | Acc: 81.960% (8196/10000)
+
+Epoch: 76
+Train Loss: 0.302 | Acc: 89.686% (44843/50000)
+Test Loss: 0.491 | Acc: 84.410% (8441/10000)
+
+Epoch: 77
+Train Loss: 0.288 | Acc: 90.174% (45087/50000)
+Test Loss: 0.667 | Acc: 80.430% (8043/10000)
+
+Epoch: 78
+Train Loss: 0.298 | Acc: 89.858% (44929/50000)
+Test Loss: 0.558 | Acc: 82.300% (8230/10000)
+
+Epoch: 79
+Train Loss: 0.286 | Acc: 90.200% (45100/50000)
+Test Loss: 0.566 | Acc: 82.350% (8235/10000)
+
+Epoch: 80
+Train Loss: 0.294 | Acc: 89.952% (44976/50000)
+Test Loss: 0.475 | Acc: 84.930% (8493/10000)
+
+Epoch: 81
+Train Loss: 0.286 | Acc: 90.230% (45115/50000)
+Test Loss: 0.559 | Acc: 82.380% (8238/10000)
+
+Epoch: 82
+Train Loss: 0.285 | Acc: 90.202% (45101/50000)
+Test Loss: 0.684 | Acc: 80.260% (8026/10000)
+
+Epoch: 83
+Train Loss: 0.282 | Acc: 90.278% (45139/50000)
+Test Loss: 0.400 | Acc: 87.120% (8712/10000)
+
+Epoch: 84
+Train Loss: 0.275 | Acc: 90.546% (45273/50000)
+Test Loss: 0.492 | Acc: 84.900% (8490/10000)
+
+Epoch: 85
+Train Loss: 0.274 | Acc: 90.650% (45325/50000)
+Test Loss: 0.528 | Acc: 83.720% (8372/10000)
+
+Epoch: 86
+Train Loss: 0.271 | Acc: 90.672% (45336/50000)
+Test Loss: 0.418 | Acc: 86.180% (8618/10000)
+
+Epoch: 87
+Train Loss: 0.270 | Acc: 90.844% (45422/50000)
+Test Loss: 0.488 | Acc: 84.930% (8493/10000)
+
+Epoch: 88
+Train Loss: 0.268 | Acc: 90.762% (45381/50000)
+Test Loss: 0.564 | Acc: 83.610% (8361/10000)
+
+Epoch: 89
+Train Loss: 0.262 | Acc: 91.116% (45558/50000)
+Test Loss: 0.522 | Acc: 83.840% (8384/10000)
+
+Epoch: 90
+Train Loss: 0.260 | Acc: 91.026% (45513/50000)
+Test Loss: 0.515 | Acc: 84.170% (8417/10000)
+
+Epoch: 91
+Train Loss: 0.252 | Acc: 91.438% (45719/50000)
+Test Loss: 0.460 | Acc: 85.380% (8538/10000)
+
+Epoch: 92
+Train Loss: 0.255 | Acc: 91.306% (45653/50000)
+Test Loss: 0.428 | Acc: 85.870% (8587/10000)
+
+Epoch: 93
+Train Loss: 0.251 | Acc: 91.328% (45664/50000)
+Test Loss: 0.450 | Acc: 85.400% (8540/10000)
+
+Epoch: 94
+Train Loss: 0.256 | Acc: 91.228% (45614/50000)
+Test Loss: 0.487 | Acc: 84.700% (8470/10000)
+
+Epoch: 95
+Train Loss: 0.248 | Acc: 91.432% (45716/50000)
+Test Loss: 0.427 | Acc: 86.330% (8633/10000)
+
+Epoch: 96
+Train Loss: 0.243 | Acc: 91.588% (45794/50000)
+Test Loss: 0.449 | Acc: 85.650% (8565/10000)
+
+Epoch: 97
+Train Loss: 0.245 | Acc: 91.598% (45799/50000)
+Test Loss: 0.589 | Acc: 80.900% (8090/10000)
+
+Epoch: 98
+Train Loss: 0.237 | Acc: 91.810% (45905/50000)
+Test Loss: 0.429 | Acc: 86.160% (8616/10000)
+
+Epoch: 99
+Train Loss: 0.233 | Acc: 91.976% (45988/50000)
+Test Loss: 0.539 | Acc: 83.510% (8351/10000)
+
+Epoch: 100
+Train Loss: 0.235 | Acc: 91.848% (45924/50000)
+Test Loss: 0.434 | Acc: 86.370% (8637/10000)
+
+Epoch: 101
+Train Loss: 0.227 | Acc: 92.168% (46084/50000)
+Test Loss: 0.516 | Acc: 83.650% (8365/10000)
+
+Epoch: 102
+Train Loss: 0.223 | Acc: 92.370% (46185/50000)
+Test Loss: 1.043 | Acc: 74.250% (7425/10000)
+
+Epoch: 103
+Train Loss: 0.226 | Acc: 92.262% (46131/50000)
+Test Loss: 0.351 | Acc: 88.540% (8854/10000)
+
+Epoch: 104
+Train Loss: 0.212 | Acc: 92.748% (46374/50000)
+Test Loss: 0.502 | Acc: 84.150% (8415/10000)
+
+Epoch: 105
+Train Loss: 0.218 | Acc: 92.610% (46305/50000)
+Test Loss: 0.507 | Acc: 84.010% (8401/10000)
+
+Epoch: 106
+Train Loss: 0.212 | Acc: 92.712% (46356/50000)
+Test Loss: 0.490 | Acc: 85.030% (8503/10000)
+
+Epoch: 107
+Train Loss: 0.213 | Acc: 92.674% (46337/50000)
+Test Loss: 0.577 | Acc: 82.850% (8285/10000)
+
+Epoch: 108
+Train Loss: 0.214 | Acc: 92.676% (46338/50000)
+Test Loss: 0.429 | Acc: 86.090% (8609/10000)
+
+Epoch: 109
+Train Loss: 0.202 | Acc: 93.008% (46504/50000)
+Test Loss: 0.440 | Acc: 86.210% (8621/10000)
+
+Epoch: 110
+Train Loss: 0.201 | Acc: 93.018% (46509/50000)
+Test Loss: 0.305 | Acc: 90.210% (9021/10000)
+
+Epoch: 111
+Train Loss: 0.198 | Acc: 93.224% (46612/50000)
+Test Loss: 0.449 | Acc: 85.600% (8560/10000)
+
+Epoch: 112
+Train Loss: 0.197 | Acc: 93.232% (46616/50000)
+Test Loss: 0.407 | Acc: 87.170% (8717/10000)
+
+Epoch: 113
+Train Loss: 0.195 | Acc: 93.322% (46661/50000)
+Test Loss: 0.424 | Acc: 86.510% (8651/10000)
+
+Epoch: 114
+Train Loss: 0.188 | Acc: 93.462% (46731/50000)
+Test Loss: 0.413 | Acc: 86.820% (8682/10000)
+
+Epoch: 115
+Train Loss: 0.188 | Acc: 93.482% (46741/50000)
+Test Loss: 0.379 | Acc: 88.270% (8827/10000)
+
+Epoch: 116
+Train Loss: 0.182 | Acc: 93.762% (46881/50000)
+Test Loss: 0.354 | Acc: 88.700% (8870/10000)
+
+Epoch: 117
+Train Loss: 0.176 | Acc: 93.898% (46949/50000)
+Test Loss: 0.417 | Acc: 87.070% (8707/10000)
+
+Epoch: 118
+Train Loss: 0.176 | Acc: 93.904% (46952/50000)
+Test Loss: 0.351 | Acc: 88.710% (8871/10000)
+
+Epoch: 119
+Train Loss: 0.176 | Acc: 94.092% (47046/50000)
+Test Loss: 0.475 | Acc: 85.610% (8561/10000)
+
+Epoch: 120
+Train Loss: 0.169 | Acc: 94.116% (47058/50000)
+Test Loss: 0.339 | Acc: 89.390% (8939/10000)
+
+Epoch: 121
+Train Loss: 0.161 | Acc: 94.456% (47228/50000)
+Test Loss: 0.330 | Acc: 89.570% (8957/10000)
+
+Epoch: 122
+Train Loss: 0.162 | Acc: 94.400% (47200/50000)
+Test Loss: 0.383 | Acc: 88.150% (8815/10000)
+
+Epoch: 123
+Train Loss: 0.156 | Acc: 94.626% (47313/50000)
+Test Loss: 0.330 | Acc: 89.530% (8953/10000)
+
+Epoch: 124
+Train Loss: 0.158 | Acc: 94.552% (47276/50000)
+Test Loss: 0.395 | Acc: 87.740% (8774/10000)
+
+Epoch: 125
+Train Loss: 0.149 | Acc: 94.836% (47418/50000)
+Test Loss: 0.443 | Acc: 87.180% (8718/10000)
+
+Epoch: 126
+Train Loss: 0.149 | Acc: 94.916% (47458/50000)
+Test Loss: 0.309 | Acc: 90.350% (9035/10000)
+
+Epoch: 127
+Train Loss: 0.143 | Acc: 95.066% (47533/50000)
+Test Loss: 0.388 | Acc: 88.780% (8878/10000)
+
+Epoch: 128
+Train Loss: 0.143 | Acc: 95.104% (47552/50000)
+Test Loss: 0.351 | Acc: 89.690% (8969/10000)
+
+Epoch: 129
+Train Loss: 0.138 | Acc: 95.300% (47650/50000)
+Test Loss: 0.294 | Acc: 90.750% (9075/10000)
+
+Epoch: 130
+Train Loss: 0.130 | Acc: 95.552% (47776/50000)
+Test Loss: 0.373 | Acc: 88.260% (8826/10000)
+
+Epoch: 131
+Train Loss: 0.136 | Acc: 95.248% (47624/50000)
+Test Loss: 0.388 | Acc: 88.540% (8854/10000)
+
+Epoch: 132
+Train Loss: 0.130 | Acc: 95.462% (47731/50000)
+Test Loss: 0.532 | Acc: 84.820% (8482/10000)
+
+Epoch: 133
+Train Loss: 0.120 | Acc: 95.788% (47894/50000)
+Test Loss: 0.328 | Acc: 90.330% (9033/10000)
+
+Epoch: 134
+Train Loss: 0.117 | Acc: 95.938% (47969/50000)
+Test Loss: 0.294 | Acc: 91.040% (9104/10000)
+
+Epoch: 135
+Train Loss: 0.119 | Acc: 95.880% (47940/50000)
+Test Loss: 0.364 | Acc: 89.410% (8941/10000)
+
+Epoch: 136
+Train Loss: 0.112 | Acc: 96.174% (48087/50000)
+Test Loss: 0.476 | Acc: 86.540% (8654/10000)
+
+Epoch: 137
+Train Loss: 0.109 | Acc: 96.242% (48121/50000)
+Test Loss: 0.389 | Acc: 89.360% (8936/10000)
+
+Epoch: 138
+Train Loss: 0.105 | Acc: 96.404% (48202/50000)
+Test Loss: 0.368 | Acc: 89.180% (8918/10000)
+
+Epoch: 139
+Train Loss: 0.104 | Acc: 96.376% (48188/50000)
+Test Loss: 0.277 | Acc: 91.300% (9130/10000)
+
+Epoch: 140
+Train Loss: 0.099 | Acc: 96.584% (48292/50000)
+Test Loss: 0.325 | Acc: 90.640% (9064/10000)
+
+Epoch: 141
+Train Loss: 0.093 | Acc: 96.846% (48423/50000)
+Test Loss: 0.255 | Acc: 91.960% (9196/10000)
+
+Epoch: 142
+Train Loss: 0.088 | Acc: 96.976% (48488/50000)
+Test Loss: 0.389 | Acc: 88.730% (8873/10000)
+
+Epoch: 143
+Train Loss: 0.088 | Acc: 96.944% (48472/50000)
+Test Loss: 0.239 | Acc: 92.800% (9280/10000)
+
+Epoch: 144
+Train Loss: 0.075 | Acc: 97.494% (48747/50000)
+Test Loss: 0.261 | Acc: 92.260% (9226/10000)
+
+Epoch: 145
+Train Loss: 0.080 | Acc: 97.266% (48633/50000)
+Test Loss: 0.347 | Acc: 90.560% (9056/10000)
+
+Epoch: 146
+Train Loss: 0.076 | Acc: 97.410% (48705/50000)
+Test Loss: 0.382 | Acc: 89.630% (8963/10000)
+
+Epoch: 147
+Train Loss: 0.074 | Acc: 97.518% (48759/50000)
+Test Loss: 0.287 | Acc: 91.570% (9157/10000)
+
+Epoch: 148
+Train Loss: 0.068 | Acc: 97.652% (48826/50000)
+Test Loss: 0.292 | Acc: 91.740% (9174/10000)
+
+Epoch: 149
+Train Loss: 0.063 | Acc: 97.916% (48958/50000)
+Test Loss: 0.304 | Acc: 91.410% (9141/10000)
+
+Epoch: 150
+Train Loss: 0.064 | Acc: 97.804% (48902/50000)
+Test Loss: 0.257 | Acc: 92.600% (9260/10000)
+
+Epoch: 151
+Train Loss: 0.060 | Acc: 97.966% (48983/50000)
+Test Loss: 0.330 | Acc: 91.120% (9112/10000)
+
+Epoch: 152
+Train Loss: 0.055 | Acc: 98.190% (49095/50000)
+Test Loss: 0.280 | Acc: 92.490% (9249/10000)
+
+Epoch: 153
+Train Loss: 0.052 | Acc: 98.298% (49149/50000)
+Test Loss: 0.354 | Acc: 90.100% (9010/10000)
+
+Epoch: 154
+Train Loss: 0.054 | Acc: 98.276% (49138/50000)
+Test Loss: 0.289 | Acc: 92.580% (9258/10000)
+
+Epoch: 155
+Train Loss: 0.043 | Acc: 98.622% (49311/50000)
+Test Loss: 0.239 | Acc: 93.460% (9346/10000)
+
+Epoch: 156
+Train Loss: 0.044 | Acc: 98.528% (49264/50000)
+Test Loss: 0.275 | Acc: 92.460% (9246/10000)
+
+Epoch: 157
+Train Loss: 0.036 | Acc: 98.816% (49408/50000)
+Test Loss: 0.227 | Acc: 93.830% (9383/10000)
+
+Epoch: 158
+Train Loss: 0.035 | Acc: 98.824% (49412/50000)
+Test Loss: 0.271 | Acc: 92.860% (9286/10000)
+
+Epoch: 159
+Train Loss: 0.030 | Acc: 99.016% (49508/50000)
+Test Loss: 0.286 | Acc: 92.480% (9248/10000)
+
+Epoch: 160
+Train Loss: 0.030 | Acc: 99.106% (49553/50000)
+Test Loss: 0.267 | Acc: 92.870% (9287/10000)
+
+Epoch: 161
+Train Loss: 0.026 | Acc: 99.186% (49593/50000)
+Test Loss: 0.255 | Acc: 93.320% (9332/10000)
+
+Epoch: 162
+Train Loss: 0.026 | Acc: 99.200% (49600/50000)
+Test Loss: 0.263 | Acc: 93.130% (9313/10000)
+
+Epoch: 163
+Train Loss: 0.024 | Acc: 99.276% (49638/50000)
+Test Loss: 0.223 | Acc: 93.950% (9395/10000)
+
+Epoch: 164
+Train Loss: 0.021 | Acc: 99.320% (49660/50000)
+Test Loss: 0.282 | Acc: 92.790% (9279/10000)
+
+Epoch: 165
+Train Loss: 0.019 | Acc: 99.466% (49733/50000)
+Test Loss: 0.219 | Acc: 94.150% (9415/10000)
+
+Epoch: 166
+Train Loss: 0.016 | Acc: 99.552% (49776/50000)
+Test Loss: 0.242 | Acc: 93.720% (9372/10000)
+
+Epoch: 167
+Train Loss: 0.013 | Acc: 99.656% (49828/50000)
+Test Loss: 0.236 | Acc: 94.020% (9402/10000)
+
+Epoch: 168
+Train Loss: 0.014 | Acc: 99.606% (49803/50000)
+Test Loss: 0.237 | Acc: 94.090% (9409/10000)
+
+Epoch: 169
+Train Loss: 0.011 | Acc: 99.712% (49856/50000)
+Test Loss: 0.224 | Acc: 94.250% (9425/10000)
+
+Epoch: 170
+Train Loss: 0.010 | Acc: 99.740% (49870/50000)
+Test Loss: 0.212 | Acc: 94.500% (9450/10000)
+
+Epoch: 171
+Train Loss: 0.008 | Acc: 99.782% (49891/50000)
+Test Loss: 0.201 | Acc: 94.770% (9477/10000)
+
+Epoch: 172
+Train Loss: 0.008 | Acc: 99.798% (49899/50000)
+Test Loss: 0.201 | Acc: 94.810% (9481/10000)
+
+Epoch: 173
+Train Loss: 0.007 | Acc: 99.814% (49907/50000)
+Test Loss: 0.192 | Acc: 95.070% (9507/10000)
+
+Epoch: 174
+Train Loss: 0.005 | Acc: 99.884% (49942/50000)
+Test Loss: 0.192 | Acc: 94.990% (9499/10000)
+
+Epoch: 175
+Train Loss: 0.005 | Acc: 99.878% (49939/50000)
+Test Loss: 0.194 | Acc: 94.940% (9494/10000)
+
+Epoch: 176
+Train Loss: 0.005 | Acc: 99.870% (49935/50000)
+Test Loss: 0.205 | Acc: 94.810% (9481/10000)
+
+Epoch: 177
+Train Loss: 0.004 | Acc: 99.892% (49946/50000)
+Test Loss: 0.194 | Acc: 95.120% (9512/10000)
+
+Epoch: 178
+Train Loss: 0.003 | Acc: 99.936% (49968/50000)
+Test Loss: 0.194 | Acc: 95.060% (9506/10000)
+
+Epoch: 179
+Train Loss: 0.004 | Acc: 99.938% (49969/50000)
+Test Loss: 0.196 | Acc: 95.020% (9502/10000)
+
+Epoch: 180
+Train Loss: 0.004 | Acc: 99.946% (49973/50000)
+Test Loss: 0.188 | Acc: 95.470% (9547/10000)
+
+Epoch: 181
+Train Loss: 0.003 | Acc: 99.966% (49983/50000)
+Test Loss: 0.197 | Acc: 94.990% (9499/10000)
+
+Epoch: 182
+Train Loss: 0.003 | Acc: 99.948% (49974/50000)
+Test Loss: 0.192 | Acc: 95.140% (9514/10000)
+
+Epoch: 183
+Train Loss: 0.002 | Acc: 99.978% (49989/50000)
+Test Loss: 0.203 | Acc: 94.990% (9499/10000)
+
+Epoch: 184
+Train Loss: 0.003 | Acc: 99.964% (49982/50000)
+Test Loss: 0.196 | Acc: 95.040% (9504/10000)
+
+Epoch: 185
+Train Loss: 0.002 | Acc: 99.964% (49982/50000)
+Test Loss: 0.195 | Acc: 95.010% (9501/10000)
+
+Epoch: 186
+Train Loss: 0.002 | Acc: 99.960% (49980/50000)
+Test Loss: 0.193 | Acc: 95.020% (9502/10000)
+
+Epoch: 187
+Train Loss: 0.002 | Acc: 99.970% (49985/50000)
+Test Loss: 0.194 | Acc: 95.200% (9520/10000)
+
+Epoch: 188
+Train Loss: 0.002 | Acc: 99.966% (49983/50000)
+Test Loss: 0.196 | Acc: 95.120% (9512/10000)
+
+Epoch: 189
+Train Loss: 0.002 | Acc: 99.972% (49986/50000)
+Test Loss: 0.191 | Acc: 95.240% (9524/10000)
+
+Epoch: 190
+Train Loss: 0.002 | Acc: 99.976% (49988/50000)
+Test Loss: 0.191 | Acc: 95.190% (9519/10000)
+
+Epoch: 191
+Train Loss: 0.002 | Acc: 99.968% (49984/50000)
+Test Loss: 0.190 | Acc: 95.240% (9524/10000)
+
+Epoch: 192
+Train Loss: 0.002 | Acc: 99.972% (49986/50000)
+Test Loss: 0.196 | Acc: 95.070% (9507/10000)
+
+Epoch: 193
+Train Loss: 0.002 | Acc: 99.988% (49994/50000)
+Test Loss: 0.194 | Acc: 95.070% (9507/10000)
+
+Epoch: 194
+Train Loss: 0.002 | Acc: 99.978% (49989/50000)
+Test Loss: 0.194 | Acc: 95.270% (9527/10000)
+
+Epoch: 195
+Train Loss: 0.002 | Acc: 99.984% (49992/50000)
+Test Loss: 0.193 | Acc: 95.230% (9523/10000)
+
+Epoch: 196
+Train Loss: 0.002 | Acc: 99.982% (49991/50000)
+Test Loss: 0.196 | Acc: 95.140% (9514/10000)
+
+Epoch: 197
+Train Loss: 0.002 | Acc: 99.990% (49995/50000)
+Test Loss: 0.192 | Acc: 95.280% (9528/10000)
+
+Epoch: 198
+Train Loss: 0.002 | Acc: 99.982% (49991/50000)
+Test Loss: 0.194 | Acc: 95.260% (9526/10000)
+
+Epoch: 199
+Train Loss: 0.002 | Acc: 99.980% (49990/50000)
+Test Loss: 0.192 | Acc: 95.190% (9519/10000)
+
+Best_acc: 95.47%
