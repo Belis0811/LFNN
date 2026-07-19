@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding: utf-8
+"""ViT-B/16 LFNN training script matching the released ImageNet configuration."""
+
+# In[ ]:
+
+
 '''Train ImageNet with PyTorch.'''
 import os
 import time
@@ -9,32 +16,38 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.models as models
 from tqdm import tqdm
-import ResNet_4out as ResNet
+from ViT import ViT
 import torch.backends.cudnn as cudnn
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+from torchvision.models import vit_b_16, ViT_B_16_Weights
+
+#os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 cudnn.benchmark = True
 
-if torch.cuda.is_available():
-    device_ids = [0]
-    for device_id in device_ids:
-        torch.cuda.set_device(device_id)
-else:
-    device = 'cpu'
+# Authoritative settings recorded in model/LFNN/vit_training_log.txt.
+BATCH_SIZE = 256
+NUM_WORKERS = 2
+NUM_EPOCHS = 90
+LOG_INTERVAL = 50
+SCHEDULER_T_MAX = 200
 
-device0 = torch.device('cuda:0')
+# if torch.cuda.is_available():
+#     device_ids = [0]
+#     for device_id in device_ids:
+#         torch.cuda.set_device(device_id)
+# else:
+#     device = 'cpu'
 
+device0 = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+#print(device0)
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
-NUM_EPOCHS = 200
-BATCH_SIZE = 155
-NUM_WORKERS = 5
 
 temp_dir = 'temp'
 
 # save temp pth
 if not os.path.exists(temp_dir):
     os.makedirs(temp_dir)
-    
+
 train_directory = './imagenet/train'
 test_directory = './imagenet/val'
 
@@ -65,9 +78,57 @@ testloader = torch.utils.data.DataLoader(
 
 # trainloader = tqdm(testloader, total=len(testloader))
 
+def load_state_dict_ignore_mismatch(model, state_dict):
+    model_dict = model.state_dict()
+
+    matched_state_dict = {k: v for k, v in state_dict.items() if k in model_dict and v.shape == model_dict[k].shape}
+
+    model_dict.update(matched_state_dict)
+
+    model.load_state_dict(model_dict)
+
+    return len(matched_state_dict), len(model_dict)
+
+
+
 # load resnet101
-net = ResNet.ResNet101()
-net = nn.DataParallel(net, device_ids=device_ids)
+net = ViT(num_classes=1000, image_size=224, patch_size=16, hidden_dim=768, num_heads=12, num_layers=12, mlp_dim=3072)
+#net = ViT(num_classes=1000, img_size=224, patch_size=16, d_model=768, n_head=12, n_layers=12, d_mlp=3072)
+import hashlib
+
+def get_model_hash(model):
+    md5 = hashlib.md5()
+    for param in model.parameters():
+        md5.update(param.data.cpu().numpy().tobytes())
+    return md5.hexdigest()
+
+# 加载预训练权重前的哈希值
+initial_hash = get_model_hash(net)
+print(f"Initial model hash: {initial_hash}")
+
+pre = vit_b_16(weights = ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1)
+pretrained_state_dict = pre.state_dict()
+#net.load_state_dict(state)
+#pretrained_state_dict = torch.load('pretrained_image1k.pth')
+#net.load_state_dict(pretrained_state_dict)
+matched_params, total_params = load_state_dict_ignore_mismatch(net, pretrained_state_dict)
+print(f"Loaded {matched_params} out of {total_params} parameters")
+
+loaded_hash = get_model_hash(net)
+print(f"Loaded model hash: {loaded_hash}")
+
+# state_dict = torch.load('temp/vit_epoch1.pth')
+# new_state_dict = {}
+# for k, v in state_dict.items():
+#     if k.startswith("module."):
+#         new_key = k[len("module."):]
+#     else:
+#         new_key = k
+#     new_state_dict[new_key] = v
+#net = nn.DataParallel(net, device_ids=device_ids)
+if torch.cuda.device_count() > 1:
+    #print(torch.cuda.device_count())
+    net = nn.DataParallel(net)
 
 net.to(device0)
 
@@ -75,44 +136,76 @@ criterion_1 = nn.CrossEntropyLoss().to(device0)
 
 # define optimizer and loss function
 optimizer_1 = optim.SGD([
-    {'params': net.module.conv1.parameters()},
-    {'params': net.module.bn1.parameters()},
-    {'params': net.module.layer1.parameters()},
-    {'params': net.module.fc1.parameters()}
+    {'params': net.module.encoder.layers[:3].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update first layer
 
 optimizer_2 = optim.SGD([
-    {'params': net.module.layer2.parameters()},
-    {'params': net.module.fc2.parameters()}
+    {'params': net.module.encoder.layers[3:6].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update second layer
 
 optimizer_3 = optim.SGD([
-    {'params': net.module.layer3.parameters()},
-    {'params': net.module.fc3.parameters()}
+     {'params': net.module.encoder.layers[6:9].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update third layer
 
 optimizer_4 = optim.SGD([
-    {'params': net.module.layer4.parameters()},
-    {'params': net.module.fc4.parameters()}
+    {'params': net.module.encoder.layers[9:].parameters()},
+    {'params': net.module.heads.parameters()},
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update fourth layer
 
-scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=NUM_EPOCHS)
-scheduler_2 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_2, T_max=NUM_EPOCHS)
-scheduler_3 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_3, T_max=NUM_EPOCHS)
-scheduler_4 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_4, T_max=NUM_EPOCHS)
+# for param in net.module.mlp_head2.parameters():
+#     param.requires_grad = False
+
+# for param in net.module.mlp_head3.parameters():
+#     param.requires_grad = False
+
+# for param in net.module.mlp_head4.parameters():
+#     param.requires_grad = False
+
+# optimizer_1 = optim.SGD([
+#     {'params': net.module.transformer_blocks[:3].parameters()},
+#     {'params': net.module.mlp_head1.parameters()}
+# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
+
+# optimizer_2 = optim.SGD([
+#     {'params': net.module.transformer_blocks[3:6].parameters()},
+#      {'params': net.module.mlp_head2.parameters()}
+# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
+
+# optimizer_3 = optim.SGD([
+#     {'params': net.module.transformer_blocks[6:9].parameters()},
+#      {'params': net.module.mlp_head3.parameters()}
+# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
+
+# optimizer_4 = optim.SGD([
+#     {'params': net.module.transformer_blocks[9:].parameters()},
+#      {'params': net.module.mlp_head4.parameters()}
+# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
+
+scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=SCHEDULER_T_MAX)
+scheduler_2 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_2, T_max=SCHEDULER_T_MAX)
+scheduler_3 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_3, T_max=SCHEDULER_T_MAX)
+scheduler_4 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_4, T_max=SCHEDULER_T_MAX)
+
 
 
 train_losses = []
 test_losses = []
 
-log_file = open("101_training_log.txt", "w")
-log_file.write(
-    f"CONFIG model=resnet101 outputs=4 epochs={NUM_EPOCHS} "
-    f"batch_size={BATCH_SIZE} num_workers={NUM_WORKERS} lr=0.001 "
-    "weight_decay=0.0005 momentum=0.9\n"
+log_file = open("vit_training_log.txt", "w")
+config_line = (
+    f"ViT config: batch_size={BATCH_SIZE}, epochs={NUM_EPOCHS}, "
+    f"cuda_devices={torch.cuda.device_count()}, train_batches={len(trainloader)}, "
+    f"test_batches={len(testloader)}"
 )
+run_line = (
+    f"Running ViT for {NUM_EPOCHS} epoch(s); batch_size={BATCH_SIZE}; "
+    f"cuda_devices={torch.cuda.device_count()}"
+)
+print(config_line)
+print(run_line)
+log_file.write(config_line + "\n")
+log_file.write(run_line + "\n")
 log_file.flush()
-
 
 # Training
 def train(epoch):
@@ -124,6 +217,9 @@ def train(epoch):
     for i, (inputs, targets) in tqdm(enumerate(trainloader)):
         inputs, targets = inputs.to(device0), targets.to(device0)
 
+        if targets.max() >= 1000 or targets.min() < 0:
+            raise ValueError(f"Targets out of range: min {targets.min()}, max {targets.max()}")
+
         optimizer_1.zero_grad()
         optimizer_2.zero_grad()
         optimizer_3.zero_grad()
@@ -131,14 +227,19 @@ def train(epoch):
 
         outputs, extra_1, extra_2, extra_3 = net(inputs)
         loss_1 = criterion_1(extra_1, targets)
+        #loss_1.backward(retain_graph=True)
 
         loss_2 = criterion_1(extra_2, targets)
+        #loss_2.backward(retain_graph=True)
 
         loss_3 = criterion_1(extra_3, targets)
+        #loss_3.backward(retain_graph=True)
 
         loss_4 = criterion_1(outputs, targets)
+        #loss_4.backward(retain_graph=True)
 
-        loss = 0.5*loss_1 + 0.5*loss_2 + 0.5*loss_3 + loss_4
+        #loss = 0.5*loss_1 + 0.5*loss_2 + 0.5*loss_3 + loss_4
+        loss = 0.5 * (loss_1 + loss_2 + loss_3) + loss_4
         loss.backward()
 
         optimizer_1.step()
@@ -150,8 +251,8 @@ def train(epoch):
         _, predicted = outputs.max(1)
         total += targets.size(0)
         correct += predicted.eq(targets).sum().item()
-        
-        if i % 50 == 0:
+
+        if i % LOG_INTERVAL == 0:
             print(f'Step [{i}/{len(trainloader)}] | Loss: {loss.item():.4f}')
             log_file.write(f'Step [{i}/{len(trainloader)}] | Loss: {loss.item():.4f}\n')
             log_file.flush()
@@ -168,7 +269,6 @@ def train(epoch):
     log_file.flush()
     train_losses.append(train_loss / len(trainloader))
 
-
 def test(epoch):
     net.eval()
     test_loss = 0
@@ -177,7 +277,7 @@ def test(epoch):
     total = 0
 
     with torch.no_grad():
-        for inputs, targets in testloader:
+        for inputs, targets in tqdm(testloader):
             inputs, targets = inputs.to(device0), targets.to(device0)
             outputs, _, _, _ = net(inputs)
             loss = criterion_1(outputs, targets)
@@ -202,14 +302,13 @@ def test(epoch):
     log_file.flush()
     test_losses.append(test_loss / len(testloader))
 
-
 for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
     train(epoch)
     test(epoch)
-    if epoch % 5 == 0:
-        check_path = os.path.join('temp', f'ResNet101_noBP_epoch{epoch + 1}.pth')
-        torch.save(net.state_dict(), check_path)
-    
+
+    check_path = os.path.join('temp', f'vit_epoch{epoch + 1}.pth')
+    torch.save(net.state_dict(), check_path)
+
     scheduler_1.step()
     scheduler_2.step()
     scheduler_3.step()
@@ -217,6 +316,6 @@ for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
 
 log_file.close()
 # Save the trained weights
-save_path = 'resnet101_4out_imagenet.pth'
+save_path = 'vit_4out_imagenet.pth'
 torch.save(net.state_dict(), save_path)
 print("Trained weights saved to:", save_path)

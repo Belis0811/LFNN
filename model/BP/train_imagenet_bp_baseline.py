@@ -24,6 +24,54 @@ import torchvision.transforms as transforms
 from torchvision.models import ResNet101_Weights, ResNet152_Weights, ViT_B_16_Weights
 
 
+EXPERIMENT_PRESETS = {
+    "resnet101": {
+        "init": "scratch",
+        "epochs": 90,
+        "batch_size": 256,
+        "num_workers": 8,
+        "lr": 0.1,
+        "eta_min": 0.0001,
+        "weight_decay": 0.00005,
+        "momentum": 0.9,
+        "log_interval": 50,
+        "checkpoint_every": 5,
+    },
+    "resnet152": {
+        "init": "scratch",
+        "epochs": 90,
+        "batch_size": 256,
+        "num_workers": 8,
+        "lr": 0.05,
+        "eta_min": 0.00001,
+        "weight_decay": 0.00005,
+        "momentum": 0.9,
+        "log_interval": 50,
+        "checkpoint_every": 5,
+    },
+    "vit_b_16": {
+        "init": "swag_e2e_ignore_mismatch_224",
+        "epochs": 90,
+        "batch_size": 256,
+        "num_workers": 8,
+        "lr": 0.001,
+        "eta_min": 0.0,
+        "weight_decay": 0.0005,
+        "momentum": 0.9,
+        "log_interval": 50,
+        "checkpoint_every": 5,
+    },
+}
+
+
+def resolve_setting(cli_value, env_name: str, preset_value, cast):
+    """Resolve CLI > environment > experiment preset."""
+    if cli_value is not None:
+        return cli_value
+    env_value = os.environ.get(env_name)
+    return cast(env_value) if env_value is not None else preset_value
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -141,18 +189,36 @@ def main() -> int:
     parser.add_argument(
         "--init",
         choices=["scratch", "torchvision", "swag", "swag_e2e", "swag_e2e_ignore_mismatch_224", "swag_linear"],
-        default="scratch",
+        default=None,
     )
-    parser.add_argument("--epochs", type=int, default=int(os.environ.get("LFNN_EPOCHS", 90)))
-    parser.add_argument("--batch-size", type=int, default=int(os.environ.get("LFNN_BATCH_SIZE", 256)))
-    parser.add_argument("--num-workers", type=int, default=int(os.environ.get("LFNN_NUM_WORKERS", 8)))
-    parser.add_argument("--lr", type=float, default=float(os.environ.get("LFNN_LR", 0.1)))
-    parser.add_argument("--eta-min", type=float, default=float(os.environ.get("LFNN_ETA_MIN", 0.0001)))
-    parser.add_argument("--weight-decay", type=float, default=float(os.environ.get("LFNN_WEIGHT_DECAY", 0.00005)))
-    parser.add_argument("--momentum", type=float, default=float(os.environ.get("LFNN_MOMENTUM", 0.9)))
-    parser.add_argument("--log-interval", type=int, default=int(os.environ.get("LFNN_LOG_INTERVAL", 50)))
-    parser.add_argument("--checkpoint-every", type=int, default=int(os.environ.get("LFNN_CHECKPOINT_EVERY", 5)))
+    parser.add_argument("--epochs", type=int, default=None)
+    parser.add_argument("--batch-size", type=int, default=None)
+    parser.add_argument("--num-workers", type=int, default=None)
+    parser.add_argument("--lr", type=float, default=None)
+    parser.add_argument("--eta-min", type=float, default=None)
+    parser.add_argument("--weight-decay", type=float, default=None)
+    parser.add_argument("--momentum", type=float, default=None)
+    parser.add_argument("--log-interval", type=int, default=None)
+    parser.add_argument("--checkpoint-every", type=int, default=None)
     args = parser.parse_args()
+
+    preset = EXPERIMENT_PRESETS[args.model]
+    args.init = resolve_setting(args.init, "LFNN_INIT", preset["init"], str)
+    args.epochs = resolve_setting(args.epochs, "LFNN_EPOCHS", preset["epochs"], int)
+    args.batch_size = resolve_setting(args.batch_size, "LFNN_BATCH_SIZE", preset["batch_size"], int)
+    args.num_workers = resolve_setting(args.num_workers, "LFNN_NUM_WORKERS", preset["num_workers"], int)
+    args.lr = resolve_setting(args.lr, "LFNN_LR", preset["lr"], float)
+    args.eta_min = resolve_setting(args.eta_min, "LFNN_ETA_MIN", preset["eta_min"], float)
+    args.weight_decay = resolve_setting(
+        args.weight_decay, "LFNN_WEIGHT_DECAY", preset["weight_decay"], float
+    )
+    args.momentum = resolve_setting(args.momentum, "LFNN_MOMENTUM", preset["momentum"], float)
+    args.log_interval = resolve_setting(
+        args.log_interval, "LFNN_LOG_INTERVAL", preset["log_interval"], int
+    )
+    args.checkpoint_every = resolve_setting(
+        args.checkpoint_every, "LFNN_CHECKPOINT_EVERY", preset["checkpoint_every"], int
+    )
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -180,6 +246,7 @@ def main() -> int:
             "weight_decay": args.weight_decay,
             "momentum": args.momentum,
             "scheduler": "CosineAnnealingLR",
+            "preset": "released_experiment",
             "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES", ""),
             "cuda_device_count": torch.cuda.device_count(),
             "device_names": [torch.cuda.get_device_name(i) for i in device_ids],
@@ -297,6 +364,12 @@ def main() -> int:
             log,
             f"DONE elapsed_sec={time.time() - start:.1f} best_top1={best_top1:.3f} "
             f"best_checkpoint={best_path if best_path else ''}",
+        )
+        log_line(
+            log,
+            f"FINAL_METRICS model={args.model} init={args.init} training=BP "
+            f"loss=global_cross_entropy val_top1={val_top1_pct:.3f} val_top5={val_top5_pct:.3f} "
+            f"top1_error={100.0 - val_top1_pct:.3f} top5_error={100.0 - val_top5_pct:.3f}",
         )
     return 0
 

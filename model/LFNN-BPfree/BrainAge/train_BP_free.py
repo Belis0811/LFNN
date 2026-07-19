@@ -230,7 +230,8 @@ if __name__ == '__main__':
 
     is_loaded = False
     start_epoch = 0
-    num_epochs = 200
+    # Authoritative run length recorded in model/LFNN/brainage_log.csv.
+    num_epochs = 100
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # device = torch.device("cuda:1")
@@ -296,7 +297,7 @@ if __name__ == '__main__':
 
     criterion = nn.L1Loss()
 
-    weight_name = f'model_epoch_200.pth'
+    weight_name = f'model_epoch_{num_epochs}.pth'
     weight_path = os.path.join(weight_dir, weight_name)
 
     train_model(train_loader=train_loader, test_loader=test_loader, model=model, weight_dir=weight_dir, is_loaded=is_loaded, weight_path=weight_path,

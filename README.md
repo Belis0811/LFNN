@@ -5,11 +5,56 @@
 * **torchvision** 0.15.0+
 *  **NumPy**,**scikit-image**,**matplotlib**,etc
   
-Please go to the `requirement.txt` file to check all dependencies.
+Please go to the `requirements.txt` file to check all dependencies.
 
 Or run the following code to install:
 ```
 pip install -r requirements.txt
+```
+
+#### Reproducing the released logs
+
+The Colab notebooks use reduced demo settings so that they finish in an
+interactive session. The table-producing defaults are recorded in
+[`experiment_configs.json`](experiment_configs.json) and in the executable
+training scripts. Each manifest entry links one code path to one released log
+and records the batch size, epoch count, optimizer, and leadership setting.
+
+Leader-follower runs corresponding to the released MNIST, CIFAR-10, and
+ImageNet-subset logs:
+
+```
+python model/LFNN/MNIST_LFNN.py
+python model/LFNN/Cifar10_LFNN.py
+python model/LFNN/ImageNet_LFNN_subset.py
+```
+
+The full ImageNet ViT run uses the logged configuration of 90 epochs, batch
+size 256, two CUDA devices, and SWAG initialization. Data-loader and scheduler
+settings that were not printed in the log retain the values from the released
+training source:
+
+```
+cd model/LFNN-BPfree/ImageNet
+python train_vit.py
+```
+
+The four-output ImageNet ResNet runs use 200 epochs, matching the released
+200-epoch logs:
+
+```
+cd model/LFNN-BPfree/ImageNet
+python ResNet101_4outputs.py
+python ResNet152_4outputs.py
+```
+
+The BP trainer selects the corresponding experiment preset from `--model`. Command-line
+arguments or `LFNN_*` environment variables may still override a preset:
+
+```
+python model/BP/train_imagenet_bp_baseline.py --model vit_b_16 --data-root /path/to/imagenet --output-dir runs/vit_bp
+python model/BP/train_imagenet_bp_baseline.py --model resnet101 --data-root /path/to/imagenet --output-dir runs/resnet101_bp
+python model/BP/train_imagenet_bp_baseline.py --model resnet152 --data-root /path/to/imagenet --output-dir runs/resnet152_bp
 ```
 
 #### 1. LFNN
@@ -44,7 +89,7 @@ Put the Tiny ImageNet dataset into the root folder, then name the dataset folder
 #### Tiny-Imagenet
 direct to 'tiny-imagenet' folder
 ```
-cd LFNN/model/LFNN-BPFree/tiny-imagenet
+cd LFNN/model/LFNN-BPfree/tiny-imagenet
 ```
 
 train VGG with 4 outputs using tiny ImageNet
@@ -67,7 +112,7 @@ python Main_16out.py
 #### ImageNet
 direct to 'imagenet' folder
 ```
-cd LFNN/model/LFNN-BPFree/imagenet
+cd LFNN/model/LFNN-BPfree/ImageNet
 ```
 
 train ResNet101 with 2 outputs
@@ -95,9 +140,9 @@ python ResNet152_4outputs.py
 #### Brain Age
 direct to 'BrainAge' folder
 ```
-cd LFNN/model/LFNN-BPFree/BrainAge
+cd LFNN/model/LFNN-BPfree/BrainAge
 ```
-**Because our data is too big, github cannot hold such big files. We provided the Google Drive link that contains sample data npy files. You could find the link under [LFNN/model/LFNN-BPFree/BrainAge/data/data_download.txt](https://drive.google.com/drive/folders/1NQ4V68W72q-OPbDHB_--oh1_Gomkzr7l?usp=sharing)**
+**Because our data is too big, GitHub cannot hold such big files. We provided the Google Drive link that contains sample data npy files. You can also find the link under `LFNN/model/LFNN-BPfree/BrainAge/data/data_dowload.txt`: [brain-age sample data](https://drive.google.com/drive/folders/1NQ4V68W72q-OPbDHB_--oh1_Gomkzr7l?usp=sharing).**
 
 Train our LFNN model with 'train_BP_free.py'
 ```
@@ -108,7 +153,7 @@ Sample data are stored under the **data** folder in the **BrainAge** directory
 #### Cell
 direct to 'Cell' folder
 ```
-cd LFNN/model/LFNN-BPFree/Cell
+cd LFNN/model/LFNN-BPfree/Cell
 ```
 Train our LFNN-UNet model with 'live_dead_segment.ipynb'
 

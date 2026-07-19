@@ -25,6 +25,9 @@ else:
 device0 = torch.device('cuda:0')
 
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
+NUM_EPOCHS = 200
+BATCH_SIZE = 118
+NUM_WORKERS = 5
 
 temp_dir = 'temp'
 
@@ -54,11 +57,11 @@ trainset = torchvision.datasets.ImageFolder(root=train_directory, transform=tran
 testset = torchvision.datasets.ImageFolder(root=test_directory, transform=transform_test)
 
 trainloader = torch.utils.data.DataLoader(
-    trainset, batch_size=118, shuffle=True, num_workers=5, pin_memory=True)
+    trainset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS, pin_memory=True)
 #trainloader = tqdm(trainloader, total=len(trainloader))
 
 testloader = torch.utils.data.DataLoader(
-    testset, batch_size=118, shuffle=False, num_workers=5, pin_memory=True)
+    testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
 
 # trainloader = tqdm(testloader, total=len(testloader))
 
@@ -85,14 +88,20 @@ optimizer_4 = optim.SGD([
     {'params': net.module.fc.parameters()}
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update layer3 and 4
 
-scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=100)
-scheduler_4 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_4, T_max=100)
+scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=NUM_EPOCHS)
+scheduler_4 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_4, T_max=NUM_EPOCHS)
 
 
 train_losses = []
 test_losses = []
 
 log_file = open("101_2out_training_log.txt", "w")
+log_file.write(
+    f"CONFIG model=resnet101 outputs=2 epochs={NUM_EPOCHS} "
+    f"batch_size={BATCH_SIZE} num_workers={NUM_WORKERS} lr=0.001 "
+    "weight_decay=0.0005 momentum=0.9\n"
+)
+log_file.flush()
 
 
 # Training
@@ -182,7 +191,7 @@ def test(epoch):
     test_losses.append(test_loss / len(testloader))
 
 
-for epoch in range(start_epoch, start_epoch + 100):
+for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
     train(epoch)
     test(epoch)
     if epoch % 5 == 0:
