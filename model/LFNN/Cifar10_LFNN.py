@@ -344,21 +344,26 @@ model = build_model(CFG)
 model.compile(optimizer=tf.keras.optimizers.Adam(CFG.learning_rate))
 model.summary()
 
-callbacks = [
-    tf.keras.callbacks.EarlyStopping(
-        monitor="val_acc",
-        mode="max",
-        patience=3,
-        restore_best_weights=True,
-    )
-]
-
 history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=CFG.epochs,
-    callbacks=callbacks,
 )
 
-results = model.evaluate(val_ds, return_dict=True)
-print(results)
+results = model.evaluate(val_ds, return_dict=True, verbose=0)
+train_accuracy = float(history.history["acc"][-1])
+test_accuracy = float(results["acc"])
+k_leaders = int(np.ceil(CFG.leader_fraction * CFG.num_workers))
+realized_leader_fraction = k_leaders / CFG.num_workers
+print()
+print(
+    f"FINAL_BEST dataset=CIFAR-10 model=LFNN-ℓ "
+    f"requested_leader_fraction={CFG.leader_fraction:.4f} "
+    f"k_leaders={k_leaders} "
+    f"realized_leader_fraction={realized_leader_fraction:.5f} "
+    f"dynamic_top_delta_selection=true epochs={CFG.epochs} "
+    f"train_accuracy={100.0 * train_accuracy:.2f}% "
+    f"test_accuracy={100.0 * test_accuracy:.2f}% "
+    f"train_error={100.0 * (1.0 - train_accuracy):.2f}% "
+    f"test_error={100.0 * (1.0 - test_accuracy):.2f}%"
+)

@@ -1,9 +1,7 @@
 '''Train ImageNet with PyTorch.'''
 import os
-import random
 import time
 
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -14,15 +12,7 @@ from tqdm import tqdm
 import ResNet_4out as ResNet
 import torch.backends.cudnn as cudnn
 
-SEED = int(os.environ.get("LFNN_SEED", "42"))
-DETERMINISTIC = os.environ.get("LFNN_DETERMINISTIC", "0") == "1"
-random.seed(SEED)
-np.random.seed(SEED)
-torch.manual_seed(SEED)
-if torch.cuda.is_available():
-    torch.cuda.manual_seed_all(SEED)
-cudnn.benchmark = not DETERMINISTIC
-cudnn.deterministic = DETERMINISTIC
+cudnn.benchmark = True
 
 device0 = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 device_ids = list(range(torch.cuda.device_count()))
@@ -114,8 +104,7 @@ log_file = open("101_training_log.txt", "w")
 log_file.write(
     f"CONFIG model=resnet101 outputs=4 epochs={NUM_EPOCHS} "
     f"batch_size={BATCH_SIZE} num_workers={NUM_WORKERS} lr=0.001 "
-    f"weight_decay=0.0005 momentum=0.9 seed={SEED} "
-    f"deterministic={DETERMINISTIC} block_local=true\n"
+    "weight_decay=0.0005 momentum=0.9\n"
 )
 log_file.flush()
 

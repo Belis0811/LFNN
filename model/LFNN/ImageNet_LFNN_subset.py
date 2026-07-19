@@ -340,5 +340,22 @@ history = model.fit(
     epochs=CFG.epochs,
 )
 
-results = model.evaluate(val_ds, return_dict=True)
-print(results)
+results = model.evaluate(val_ds, return_dict=True, verbose=0)
+train_accuracy = float(history.history['acc'][-1])
+test_accuracy = float(results['acc'])
+k_leaders = int(np.ceil(CFG.leader_fraction * CFG.num_workers))
+realized_leader_fraction = k_leaders / CFG.num_workers
+realized_follower_fraction = 1.0 - realized_leader_fraction
+print()
+print(
+    f'FINAL_BEST dataset=ImageNet_Subset model=LFNN-ℓ '
+    f'requested_leader_fraction={CFG.leader_fraction:.4f} '
+    f'k_leaders={k_leaders} '
+    f'realized_leader_fraction={realized_leader_fraction:.5f} '
+    f'realized_follower_fraction={realized_follower_fraction:.5f} '
+    f'dynamic_top_delta_selection=true epochs={CFG.epochs} '
+    f'train_accuracy={100.0 * train_accuracy:.2f}% '
+    f'test_accuracy={100.0 * test_accuracy:.2f}% '
+    f'train_error={100.0 * (1.0 - train_accuracy):.2f}% '
+    f'test_error={100.0 * (1.0 - test_accuracy):.2f}%'
+)

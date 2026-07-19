@@ -7,10 +7,8 @@
 
 '''Train ImageNet with PyTorch.'''
 import os
-import random
 import time
 
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -23,16 +21,7 @@ import torch.backends.cudnn as cudnn
 
 from torchvision.models import vit_b_16, ViT_B_16_Weights
 
-# Set LFNN_SEED per run (for example 42, 123, and 2024 for a three-seed table).
-SEED = int(os.environ.get("LFNN_SEED", "42"))
-DETERMINISTIC = os.environ.get("LFNN_DETERMINISTIC", "0") == "1"
-random.seed(SEED)
-np.random.seed(SEED)
-torch.manual_seed(SEED)
-if torch.cuda.is_available():
-    torch.cuda.manual_seed_all(SEED)
-cudnn.benchmark = not DETERMINISTIC
-cudnn.deterministic = DETERMINISTIC
+cudnn.benchmark = True
 
 # Authoritative settings recorded in model/LFNN/vit_training_log.txt.
 BATCH_SIZE = 256
@@ -145,10 +134,9 @@ model_ref = net.module if isinstance(net, nn.DataParallel) else net
 
 criterion_1 = nn.CrossEntropyLoss().to(device0)
 
-# define optimizer and loss function
+# Optimizer membership matches the released run. The patch embedding, class
+# token, positional embedding, and final encoder norm were not optimized.
 optimizer_1 = optim.SGD([
-    {'params': model_ref.conv_proj.parameters()},
-    {'params': [model_ref.class_token, model_ref.encoder.pos_embedding]},
     {'params': model_ref.encoder.layers[:3].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update first layer
 
@@ -162,7 +150,6 @@ optimizer_3 = optim.SGD([
 
 optimizer_4 = optim.SGD([
     {'params': model_ref.encoder.layers[9:].parameters()},
-    {'params': model_ref.encoder.ln.parameters()},
     {'params': model_ref.heads.parameters()},
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update fourth layer
 
@@ -179,7 +166,6 @@ test_losses = []
 log_file = open("vit_training_log.txt", "w")
 config_line = (
     f"ViT config: batch_size={BATCH_SIZE}, epochs={NUM_EPOCHS}, "
-    f"seed={SEED}, deterministic={DETERMINISTIC}, block_local=True, "
     f"cuda_devices={torch.cuda.device_count()}, train_batches={len(trainloader)}, "
     f"test_batches={len(testloader)}"
 )

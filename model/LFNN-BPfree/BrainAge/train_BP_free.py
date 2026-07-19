@@ -123,18 +123,18 @@ def train_model(train_loader, test_loader, model, weight_dir, is_loaded, weight_
 
             # outputs = model(inputs)
             out1, out2, out3, out4 = model(inputs)
-            out1 = out1.reshape(-1)
-            out2 = out2.reshape(-1)
-            out3 = out3.reshape(-1)
-            out4 = out4.reshape(-1)
+            out1 = torch.squeeze(out1)
+            out2 = torch.squeeze(out2)
+            out3 = torch.squeeze(out3)
+            out4 = torch.squeeze(out4)
             # print(f'model output shape {outputs.shape}, label shape {labels.shape}')
             # print(f'model output {outputs}, label {labels}')
             loss1 = criterion(out1, labels)
-            loss1.backward()
+            loss1.backward(retain_graph=True)
             loss2 = criterion(out2, labels)
-            loss2.backward()
+            loss2.backward(retain_graph=True)
             loss3 = criterion(out3, labels)
-            loss3.backward()
+            loss3.backward(retain_graph=True)
             loss4 = criterion(out4, labels)
             loss4.backward()
 
@@ -182,7 +182,7 @@ def test_model(test_loader, model, criterion):
         for i, data in progress_bar:
             inputs, labels = data[0].to(device), data[1].to(device)
             out1, out2, out3, out4 = model(inputs)
-            outputs = out4.reshape(-1)
+            outputs = torch.squeeze(out4)
             loss = criterion(outputs, labels)
             total_loss += loss.item()
 
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     num_epochs = 100
     print(
         f'CONFIG epochs={num_epochs} batch_size=1 seed={run_seed} '
-        'test_fraction=0.2 block_local=true'
+        'test_fraction=0.2 training_scope=all_leader_multi_output'
     )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

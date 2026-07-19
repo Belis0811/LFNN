@@ -1,152 +1,102 @@
 Epoch 1/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 32s 0.083s/step - acc: 0.5873 - follower_loss: 0.0578 - local_output_loss: 1.1456 - leader_fraction: 0.7188 - leader_loss: 0.7483 - loss: 1.9228 - val_acc: 0.4291 - val_follower_loss: 0.0821 - val_local_output_loss: 1.6258 - val_leader_fraction: 0.7188 - val_leader_loss: 1.0646 - val_loss: 2.7314
-LEADERSHIP epoch=1 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.381 layer2_jaccard_to_final=0.356
 Epoch 2/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.6035 - follower_loss: 0.0517 - local_output_loss: 1.1022 - leader_fraction: 0.7188 - leader_loss: 0.7242 - loss: 1.8523 - val_acc: 0.4499 - val_follower_loss: 0.0725 - val_local_output_loss: 1.5882 - val_leader_fraction: 0.7188 - val_leader_loss: 1.0406 - val_loss: 2.6650
-LEADERSHIP epoch=2 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.581 layer2_jaccard_to_final=0.572
 Epoch 3/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.090s/step - acc: 0.6368 - follower_loss: 0.0515 - local_output_loss: 1.0526 - leader_fraction: 0.7188 - leader_loss: 0.6836 - loss: 1.7619 - val_acc: 0.4777 - val_follower_loss: 0.0697 - val_local_output_loss: 1.5440 - val_leader_fraction: 0.7188 - val_leader_loss: 1.0096 - val_loss: 2.5884
-LEADERSHIP epoch=3 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.766 layer2_jaccard_to_final=0.772
 Epoch 4/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.091s/step - acc: 0.6650 - follower_loss: 0.0486 - local_output_loss: 1.0105 - leader_fraction: 0.7188 - leader_loss: 0.6580 - loss: 1.6928 - val_acc: 0.5018 - val_follower_loss: 0.0667 - val_local_output_loss: 1.5106 - val_leader_fraction: 0.7188 - val_leader_loss: 0.9904 - val_loss: 2.5344
-LEADERSHIP epoch=4 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.868 layer2_jaccard_to_final=0.858
 Epoch 5/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.6896 - follower_loss: 0.0423 - local_output_loss: 0.9613 - leader_fraction: 0.7188 - leader_loss: 0.6289 - loss: 1.6113 - val_acc: 0.5356 - val_follower_loss: 0.0656 - val_local_output_loss: 1.4397 - val_leader_fraction: 0.7188 - val_leader_loss: 0.9337 - val_loss: 2.4062
-LEADERSHIP epoch=5 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.966 layer2_jaccard_to_final=0.929
 Epoch 6/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.091s/step - acc: 0.7149 - follower_loss: 0.0347 - local_output_loss: 0.9116 - leader_fraction: 0.7188 - leader_loss: 0.5972 - loss: 1.5261 - val_acc: 0.5498 - val_follower_loss: 0.0554 - val_local_output_loss: 1.4083 - val_leader_fraction: 0.7188 - val_leader_loss: 0.9262 - val_loss: 2.3622
-LEADERSHIP epoch=6 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.975 layer2_jaccard_to_final=0.944
 Epoch 7/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.084s/step - acc: 0.7326 - follower_loss: 0.0414 - local_output_loss: 0.9089 - leader_fraction: 0.7188 - leader_loss: 0.5906 - loss: 1.5202 - val_acc: 0.5674 - val_follower_loss: 0.0528 - val_local_output_loss: 1.3982 - val_leader_fraction: 0.7188 - val_leader_loss: 0.9178 - val_loss: 2.3424
-LEADERSHIP epoch=7 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.958 layer2_jaccard_to_final=0.969
 Epoch 8/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.086s/step - acc: 0.7510 - follower_loss: 0.0329 - local_output_loss: 0.8407 - leader_fraction: 0.7188 - leader_loss: 0.5492 - loss: 1.4064 - val_acc: 0.5904 - val_follower_loss: 0.0486 - val_local_output_loss: 1.3455 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8761 - val_loss: 2.2458
-LEADERSHIP epoch=8 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.983 layer2_jaccard_to_final=0.961
 Epoch 9/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.091s/step - acc: 0.7657 - follower_loss: 0.0278 - local_output_loss: 0.8403 - leader_fraction: 0.7188 - leader_loss: 0.5475 - loss: 1.4017 - val_acc: 0.6080 - val_follower_loss: 0.0501 - val_local_output_loss: 1.3163 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8642 - val_loss: 2.2055
-LEADERSHIP epoch=9 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.992 layer2_jaccard_to_final=0.991
 Epoch 10/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.7868 - follower_loss: 0.0290 - local_output_loss: 0.8052 - leader_fraction: 0.7188 - leader_loss: 0.5260 - loss: 1.3458 - val_acc: 0.6184 - val_follower_loss: 0.0473 - val_local_output_loss: 1.2854 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8342 - val_loss: 2.1432
-LEADERSHIP epoch=10 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.980 layer2_jaccard_to_final=0.979
 Epoch 11/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.088s/step - acc: 0.7900 - follower_loss: 0.0281 - local_output_loss: 0.7856 - leader_fraction: 0.7188 - leader_loss: 0.5061 - loss: 1.3058 - val_acc: 0.6362 - val_follower_loss: 0.0428 - val_local_output_loss: 1.2602 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8198 - val_loss: 2.1014
-LEADERSHIP epoch=11 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=1.000 layer2_jaccard_to_final=0.945
 Epoch 12/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.090s/step - acc: 0.8125 - follower_loss: 0.0286 - local_output_loss: 0.7601 - leader_fraction: 0.7188 - leader_loss: 0.5010 - loss: 1.2755 - val_acc: 0.6526 - val_follower_loss: 0.0443 - val_local_output_loss: 1.2381 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8026 - val_loss: 2.0628
-LEADERSHIP epoch=12 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.983 layer2_jaccard_to_final=0.964
 Epoch 13/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.085s/step - acc: 0.8275 - follower_loss: 0.0243 - local_output_loss: 0.7203 - leader_fraction: 0.7188 - leader_loss: 0.4738 - loss: 1.2062 - val_acc: 0.6600 - val_follower_loss: 0.0443 - val_local_output_loss: 1.2659 - val_leader_fraction: 0.7188 - val_leader_loss: 0.8290 - val_loss: 2.1171
-LEADERSHIP epoch=13 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.986 layer2_jaccard_to_final=0.995
 Epoch 14/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.093s/step - acc: 0.8302 - follower_loss: 0.0221 - local_output_loss: 0.7125 - leader_fraction: 0.7188 - leader_loss: 0.4676 - loss: 1.1912 - val_acc: 0.6753 - val_follower_loss: 0.0366 - val_local_output_loss: 1.2234 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7978 - val_loss: 2.0395
-LEADERSHIP epoch=14 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.988 layer2_jaccard_to_final=0.975
 Epoch 15/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 37s 0.093s/step - acc: 0.8476 - follower_loss: 0.0218 - local_output_loss: 0.6892 - leader_fraction: 0.7188 - leader_loss: 0.4518 - loss: 1.1518 - val_acc: 0.6822 - val_follower_loss: 0.0362 - val_local_output_loss: 1.2214 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7998 - val_loss: 2.0393
-LEADERSHIP epoch=15 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.985 layer2_jaccard_to_final=0.961
 Epoch 16/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.089s/step - acc: 0.8561 - follower_loss: 0.0225 - local_output_loss: 0.6867 - leader_fraction: 0.7188 - leader_loss: 0.4500 - loss: 1.1480 - val_acc: 0.6915 - val_follower_loss: 0.0384 - val_local_output_loss: 1.1798 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7761 - val_loss: 1.9751
-LEADERSHIP epoch=16 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.965 layer2_jaccard_to_final=0.972
 Epoch 17/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.8653 - follower_loss: 0.0186 - local_output_loss: 0.6494 - leader_fraction: 0.7188 - leader_loss: 0.4214 - loss: 1.0800 - val_acc: 0.6993 - val_follower_loss: 0.0287 - val_local_output_loss: 1.1706 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7651 - val_loss: 1.9501
-LEADERSHIP epoch=17 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.986 layer2_jaccard_to_final=0.979
 Epoch 18/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.8718 - follower_loss: 0.0153 - local_output_loss: 0.6380 - leader_fraction: 0.7188 - leader_loss: 0.4184 - loss: 1.0641 - val_acc: 0.7042 - val_follower_loss: 0.0352 - val_local_output_loss: 1.1786 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7721 - val_loss: 1.9682
-LEADERSHIP epoch=18 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.978 layer2_jaccard_to_final=0.983
 Epoch 19/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.085s/step - acc: 0.8802 - follower_loss: 0.0114 - local_output_loss: 0.6344 - leader_fraction: 0.7188 - leader_loss: 0.4092 - loss: 1.0493 - val_acc: 0.7150 - val_follower_loss: 0.0358 - val_local_output_loss: 1.1404 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7428 - val_loss: 1.9011
-LEADERSHIP epoch=19 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.983 layer2_jaccard_to_final=0.954
 Epoch 20/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.090s/step - acc: 0.8827 - follower_loss: 0.0182 - local_output_loss: 0.6174 - leader_fraction: 0.7188 - leader_loss: 0.4072 - loss: 1.0337 - val_acc: 0.7208 - val_follower_loss: 0.0257 - val_local_output_loss: 1.1681 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7553 - val_loss: 1.9362
-LEADERSHIP epoch=20 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.997 layer2_jaccard_to_final=0.975
 Epoch 21/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.092s/step - acc: 0.8915 - follower_loss: 0.0170 - local_output_loss: 0.6154 - leader_fraction: 0.7188 - leader_loss: 0.4023 - loss: 1.0262 - val_acc: 0.7205 - val_follower_loss: 0.0230 - val_local_output_loss: 1.1270 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7322 - val_loss: 1.8707
-LEADERSHIP epoch=21 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.996 layer2_jaccard_to_final=0.970
 Epoch 22/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.090s/step - acc: 0.8976 - follower_loss: 0.0135 - local_output_loss: 0.6051 - leader_fraction: 0.7188 - leader_loss: 0.3974 - loss: 1.0092 - val_acc: 0.7343 - val_follower_loss: 0.0279 - val_local_output_loss: 1.1104 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7327 - val_loss: 1.8570
-LEADERSHIP epoch=22 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=1.000 layer2_jaccard_to_final=0.971
 Epoch 23/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9051 - follower_loss: 0.0148 - local_output_loss: 0.5794 - leader_fraction: 0.7188 - leader_loss: 0.3745 - loss: 0.9613 - val_acc: 0.7394 - val_follower_loss: 0.0263 - val_local_output_loss: 1.1012 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7167 - val_loss: 1.8310
-LEADERSHIP epoch=23 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.993 layer2_jaccard_to_final=0.989
 Epoch 24/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.086s/step - acc: 0.9084 - follower_loss: 0.0117 - local_output_loss: 0.5907 - leader_fraction: 0.7188 - leader_loss: 0.3864 - loss: 0.9830 - val_acc: 0.7425 - val_follower_loss: 0.0283 - val_local_output_loss: 1.0955 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7146 - val_loss: 1.8243
-LEADERSHIP epoch=24 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.988 layer2_jaccard_to_final=0.976
 Epoch 25/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.084s/step - acc: 0.9122 - follower_loss: 0.0151 - local_output_loss: 0.5829 - leader_fraction: 0.7188 - leader_loss: 0.3849 - loss: 0.9754 - val_acc: 0.7471 - val_follower_loss: 0.0221 - val_local_output_loss: 1.0821 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7059 - val_loss: 1.7991
-LEADERSHIP epoch=25 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.977 layer2_jaccard_to_final=0.946
 Epoch 26/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.085s/step - acc: 0.9127 - follower_loss: 0.0156 - local_output_loss: 0.5676 - leader_fraction: 0.7188 - leader_loss: 0.3754 - loss: 0.9508 - val_acc: 0.7511 - val_follower_loss: 0.0290 - val_local_output_loss: 1.0935 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7109 - val_loss: 1.8189
-LEADERSHIP epoch=26 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.962 layer2_jaccard_to_final=0.970
 Epoch 27/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.083s/step - acc: 0.9192 - follower_loss: 0.0093 - local_output_loss: 0.5638 - leader_fraction: 0.7188 - leader_loss: 0.3667 - loss: 0.9351 - val_acc: 0.7576 - val_follower_loss: 0.0251 - val_local_output_loss: 1.0666 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6943 - val_loss: 1.7735
-LEADERSHIP epoch=27 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.995 layer2_jaccard_to_final=0.970
 Epoch 28/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.085s/step - acc: 0.9210 - follower_loss: 0.0103 - local_output_loss: 0.5349 - leader_fraction: 0.7188 - leader_loss: 0.3515 - loss: 0.8916 - val_acc: 0.7590 - val_follower_loss: 0.0217 - val_local_output_loss: 1.0761 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7005 - val_loss: 1.7874
-LEADERSHIP epoch=28 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.979 layer2_jaccard_to_final=0.967
 Epoch 29/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 32s 0.082s/step - acc: 0.9220 - follower_loss: 0.0131 - local_output_loss: 0.5669 - leader_fraction: 0.7188 - leader_loss: 0.3692 - loss: 0.9427 - val_acc: 0.7603 - val_follower_loss: 0.0198 - val_local_output_loss: 1.0792 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7053 - val_loss: 1.7945
-LEADERSHIP epoch=29 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.978 layer2_jaccard_to_final=0.978
 Epoch 30/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9287 - follower_loss: 0.0110 - local_output_loss: 0.5602 - leader_fraction: 0.7188 - leader_loss: 0.3669 - loss: 0.9326 - val_acc: 0.7622 - val_follower_loss: 0.0177 - val_local_output_loss: 1.0761 - val_leader_fraction: 0.7188 - val_leader_loss: 0.7065 - val_loss: 1.7914
-LEADERSHIP epoch=30 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=1.000 layer2_jaccard_to_final=0.991
 Epoch 31/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 37s 0.095s/step - acc: 0.9317 - follower_loss: 0.0108 - local_output_loss: 0.5320 - leader_fraction: 0.7188 - leader_loss: 0.3502 - loss: 0.8876 - val_acc: 0.7649 - val_follower_loss: 0.0204 - val_local_output_loss: 1.0723 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6983 - val_loss: 1.7808
-LEADERSHIP epoch=31 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.992 layer2_jaccard_to_final=0.989
 Epoch 32/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9353 - follower_loss: 0.0103 - local_output_loss: 0.5319 - leader_fraction: 0.7188 - leader_loss: 0.3439 - loss: 0.8809 - val_acc: 0.7705 - val_follower_loss: 0.0167 - val_local_output_loss: 1.0722 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6974 - val_loss: 1.7779
-LEADERSHIP epoch=32 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.963 layer2_jaccard_to_final=0.984
 Epoch 33/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9329 - follower_loss: 0.0098 - local_output_loss: 0.5263 - leader_fraction: 0.7188 - leader_loss: 0.3411 - loss: 0.8723 - val_acc: 0.7697 - val_follower_loss: 0.0212 - val_local_output_loss: 1.0682 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6967 - val_loss: 1.7755
-LEADERSHIP epoch=33 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.995 layer2_jaccard_to_final=0.987
 Epoch 34/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.086s/step - acc: 0.9368 - follower_loss: 0.0112 - local_output_loss: 0.5272 - leader_fraction: 0.7188 - leader_loss: 0.3443 - loss: 0.8770 - val_acc: 0.7734 - val_follower_loss: 0.0198 - val_local_output_loss: 1.0556 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6829 - val_loss: 1.7484
-LEADERSHIP epoch=34 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.970 layer2_jaccard_to_final=0.974
 Epoch 35/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9370 - follower_loss: 0.0078 - local_output_loss: 0.5345 - leader_fraction: 0.7188 - leader_loss: 0.3498 - loss: 0.8882 - val_acc: 0.7768 - val_follower_loss: 0.0132 - val_local_output_loss: 1.0530 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6904 - val_loss: 1.7500
-LEADERSHIP epoch=35 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.977 layer2_jaccard_to_final=0.987
 Epoch 36/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9386 - follower_loss: 0.0066 - local_output_loss: 0.5191 - leader_fraction: 0.7188 - leader_loss: 0.3415 - loss: 0.8639 - val_acc: 0.7779 - val_follower_loss: 0.0170 - val_local_output_loss: 1.0197 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6620 - val_loss: 1.6901
-LEADERSHIP epoch=36 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.981 layer2_jaccard_to_final=0.969
 Epoch 37/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9402 - follower_loss: 0.0093 - local_output_loss: 0.5291 - leader_fraction: 0.7188 - leader_loss: 0.3463 - loss: 0.8801 - val_acc: 0.7795 - val_follower_loss: 0.0163 - val_local_output_loss: 1.0493 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6822 - val_loss: 1.7397
-LEADERSHIP epoch=37 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.994 layer2_jaccard_to_final=0.980
 Epoch 38/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.093s/step - acc: 0.9429 - follower_loss: 0.0077 - local_output_loss: 0.5356 - leader_fraction: 0.7188 - leader_loss: 0.3512 - loss: 0.8907 - val_acc: 0.7805 - val_follower_loss: 0.0210 - val_local_output_loss: 1.0482 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6838 - val_loss: 1.7424
-LEADERSHIP epoch=38 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.987 layer2_jaccard_to_final=0.974
 Epoch 39/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.083s/step - acc: 0.9430 - follower_loss: 0.0106 - local_output_loss: 0.5152 - leader_fraction: 0.7188 - leader_loss: 0.3278 - loss: 0.8483 - val_acc: 0.7813 - val_follower_loss: 0.0138 - val_local_output_loss: 1.0353 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6720 - val_loss: 1.7142
-LEADERSHIP epoch=39 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.988 layer2_jaccard_to_final=0.969
 Epoch 40/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.091s/step - acc: 0.9471 - follower_loss: 0.0092 - local_output_loss: 0.5216 - leader_fraction: 0.7188 - leader_loss: 0.3446 - loss: 0.8708 - val_acc: 0.7843 - val_follower_loss: 0.0151 - val_local_output_loss: 1.0447 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6874 - val_loss: 1.7396
-LEADERSHIP epoch=40 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.998 layer2_jaccard_to_final=0.976
 Epoch 41/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 33s 0.085s/step - acc: 0.9484 - follower_loss: 0.0101 - local_output_loss: 0.5013 - leader_fraction: 0.7188 - leader_loss: 0.3301 - loss: 0.8364 - val_acc: 0.7839 - val_follower_loss: 0.0105 - val_local_output_loss: 1.0378 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6738 - val_loss: 1.7169
-LEADERSHIP epoch=41 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.998 layer2_jaccard_to_final=0.980
 Epoch 42/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.091s/step - acc: 0.9529 - follower_loss: 0.0060 - local_output_loss: 0.5102 - leader_fraction: 0.7188 - leader_loss: 0.3293 - loss: 0.8425 - val_acc: 0.7902 - val_follower_loss: 0.0151 - val_local_output_loss: 1.0089 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6527 - val_loss: 1.6692
-LEADERSHIP epoch=42 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=1.000 layer2_jaccard_to_final=0.963
 Epoch 43/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.087s/step - acc: 0.9530 - follower_loss: 0.0048 - local_output_loss: 0.5062 - leader_fraction: 0.7188 - leader_loss: 0.3333 - loss: 0.8419 - val_acc: 0.7910 - val_follower_loss: 0.0189 - val_local_output_loss: 1.0204 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6626 - val_loss: 1.6925
-LEADERSHIP epoch=43 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.971 layer2_jaccard_to_final=0.979
 Epoch 44/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9532 - follower_loss: 0.0071 - local_output_loss: 0.4979 - leader_fraction: 0.7188 - leader_loss: 0.3175 - loss: 0.8190 - val_acc: 0.7906 - val_follower_loss: 0.0190 - val_local_output_loss: 1.0349 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6795 - val_loss: 1.7239
-LEADERSHIP epoch=44 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.971 layer2_jaccard_to_final=0.970
 Epoch 45/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9528 - follower_loss: 0.0055 - local_output_loss: 0.5038 - leader_fraction: 0.7188 - leader_loss: 0.3267 - loss: 0.8332 - val_acc: 0.7908 - val_follower_loss: 0.0150 - val_local_output_loss: 1.0369 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6782 - val_loss: 1.7226
-LEADERSHIP epoch=45 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.993 layer2_jaccard_to_final=0.973
 Epoch 46/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9533 - follower_loss: 0.0034 - local_output_loss: 0.5077 - leader_fraction: 0.7188 - leader_loss: 0.3312 - loss: 0.8406 - val_acc: 0.7907 - val_follower_loss: 0.0172 - val_local_output_loss: 1.0247 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6734 - val_loss: 1.7067
-LEADERSHIP epoch=46 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.985 layer2_jaccard_to_final=0.973
 Epoch 47/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9528 - follower_loss: 0.0080 - local_output_loss: 0.4782 - leader_fraction: 0.7188 - leader_loss: 0.3153 - loss: 0.7975 - val_acc: 0.7905 - val_follower_loss: 0.0145 - val_local_output_loss: 1.0263 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6654 - val_loss: 1.6990
-LEADERSHIP epoch=47 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.991 layer2_jaccard_to_final=0.991
 Epoch 48/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 35s 0.089s/step - acc: 0.9529 - follower_loss: 0.0085 - local_output_loss: 0.4997 - leader_fraction: 0.7188 - leader_loss: 0.3308 - loss: 0.8348 - val_acc: 0.7908 - val_follower_loss: 0.0119 - val_local_output_loss: 1.0227 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6654 - val_loss: 1.6940
-LEADERSHIP epoch=48 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.981 layer2_jaccard_to_final=0.974
 Epoch 49/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 36s 0.091s/step - acc: 0.9530 - follower_loss: 0.0069 - local_output_loss: 0.5083 - leader_fraction: 0.7188 - leader_loss: 0.3314 - loss: 0.8432 - val_acc: 0.7904 - val_follower_loss: 0.0134 - val_local_output_loss: 1.0235 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6781 - val_loss: 1.7083
-LEADERSHIP epoch=49 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.982 layer2_jaccard_to_final=0.966
 Epoch 50/50
 391/391 ━━━━━━━━━━━━━━━━━━━━ 34s 0.088s/step - acc: 0.9531 - follower_loss: 0.0067 - local_output_loss: 0.5011 - leader_fraction: 0.7188 - leader_loss: 0.3311 - loss: 0.8356 - val_acc: 0.7905 - val_follower_loss: 0.0075 - val_local_output_loss: 1.0281 - val_leader_fraction: 0.7188 - val_leader_loss: 0.6733 - val_loss: 1.7051
-LEADERSHIP epoch=50 dynamic_reselected_each_batch=true k_leaders=23 layer1_jaccard_to_final=0.983 layer2_jaccard_to_final=0.968
 
 FINAL_BEST dataset=CIFAR-10 model=LFNN-ℓ requested_leader_fraction=0.7000 k_leaders=23 realized_leader_fraction=0.71875 dynamic_top_delta_selection=true epochs=50 train_accuracy=95.31% test_accuracy=79.05% train_error=4.69% test_error=20.95%

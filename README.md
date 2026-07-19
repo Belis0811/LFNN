@@ -15,24 +15,27 @@ pip install -r requirements.txt
 #### Experiment scope and reproducibility
 
 The dynamic top-delta leader selection and follower-to-best-leader MSE are
-implemented by the MNIST, CIFAR-10, and ImageNet-subset scripts under
-`model/LFNN`. The scaled ViT, ResNet, brain-age, Tiny-ImageNet, and cell
-trainers under `model/LFNN-BPfree` implement the LFNN-l special case as
-block-local deep supervision; they do not perform dynamic leader selection.
+implemented by the MNIST, CIFAR-10, and ImageNet-subset `*_detailed.ipynb`
+notebooks under `model/LFNN`. The matching `.py` files are executable exports.
+The scaled ViT, ResNet, brain-age, Tiny-ImageNet, and cell trainers under
+`model/LFNN-BPfree` implement the delta=100% all-leader case with multiple
+supervised outputs; they do not perform dynamic leader selection or follower
+alignment.
 
-The table-producing hyperparameters transcribed from the released logs are recorded in
-[`experiment_configs.json`](experiment_configs.json) and in the executable
-training scripts. Each manifest entry links one code path to one released log
-and records the batch size, epoch count, optimizer, and leadership setting.
+The table-producing hyperparameters transcribed from the released logs are
+recorded in [`experiment_configs.json`](experiment_configs.json) and in the
+training sources. For partial-leadership runs, each manifest entry links the
+detailed notebook, its executable export, and the released log. It also records
+the batch size, epoch count, optimizer, and leadership setting.
 
-The current scaled trainers also contain correctness repairs to device handling,
-block boundaries, model forward passes, and evaluation. Those repairs change
-the implementation relative to the historical log-producing source. Therefore,
-the historical logs must not be presented as outputs of the corrected code;
-fresh runs and logs are required before reporting results from this revision.
+The log-mapped ViT, ResNet, and brain-age training paths preserve the
+optimization graphs, optimizer membership, epoch budgets, batch sizes, and
+learning-rate schedules used by the corresponding logged runs. Portability
+fixes for CPU/single-GPU execution and checkpoint access do not insert new
+gradient-detach boundaries or otherwise change the logged training objectives.
 
-Leader-follower runs corresponding to the released MNIST, CIFAR-10, and
-ImageNet-subset logs:
+The detailed notebooks and these executable exports use the full configurations
+corresponding to the released MNIST, CIFAR-10, and ImageNet-subset logs:
 
 ```
 python model/LFNN/MNIST_LFNN.py
@@ -59,9 +62,10 @@ python ResNet101_4outputs.py
 python ResNet152_4outputs.py
 ```
 
-The BP trainer selects the corresponding experiment preset from `--model`. Command-line
-arguments or `LFNN_*` environment variables may still override a preset. Set
-`LFNN_SEED` for each replicate and record the generated log and checkpoints:
+The BP trainer selects the corresponding experiment preset from `--model`.
+Command-line arguments or `LFNN_*` environment variables may still override a
+preset. Each cosine schedule uses the `T_max` recorded by the corresponding
+released BP learning-rate trace:
 
 ```
 python model/BP/train_imagenet_bp_baseline.py --model vit_b_16 --data-root /path/to/imagenet --output-dir runs/vit_bp
@@ -154,13 +158,10 @@ direct to 'BrainAge' folder
 ```
 cd LFNN/model/LFNN-BPfree/BrainAge
 ```
-**Because our data is too big, GitHub cannot hold such big files. We provided the Google Drive link that contains sample data npy files. You can also find the link under `LFNN/model/LFNN-BPfree/BrainAge/data/data_dowload.txt`: [brain-age sample data](https://drive.google.com/drive/folders/1NQ4V68W72q-OPbDHB_--oh1_Gomkzr7l?usp=sharing).**
-
 Train our LFNN model with 'train_BP_free.py'
 ```
 python train_BP_free.py
 ```
-Sample data are stored under the **data** folder in the **BrainAge** directory
 
 #### Cell
 direct to 'Cell' folder
