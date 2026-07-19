@@ -91,7 +91,7 @@ optimizer_3 = optim.SGD([
 
 optimizer_4 = optim.SGD([
     {'params': net.module.layer4.parameters()},
-    {'params': net.module.fc.parameters()}
+    {'params': net.module.fc4.parameters()}
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update fourth layer
 
 scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=100)
