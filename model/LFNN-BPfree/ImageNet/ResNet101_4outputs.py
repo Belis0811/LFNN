@@ -1,7 +1,9 @@
 '''Train ImageNet with PyTorch.'''
 import os
+import random
 import time
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -12,17 +14,18 @@ from tqdm import tqdm
 import ResNet_4out as ResNet
 import torch.backends.cudnn as cudnn
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-cudnn.benchmark = True
-
+SEED = int(os.environ.get("LFNN_SEED", "42"))
+DETERMINISTIC = os.environ.get("LFNN_DETERMINISTIC", "0") == "1"
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
 if torch.cuda.is_available():
-    device_ids = [0]
-    for device_id in device_ids:
-        torch.cuda.set_device(device_id)
-else:
-    device = 'cpu'
+    torch.cuda.manual_seed_all(SEED)
+cudnn.benchmark = not DETERMINISTIC
+cudnn.deterministic = DETERMINISTIC
 
-device0 = torch.device('cuda:0')
+device0 = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device_ids = list(range(torch.cuda.device_count()))
 
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 NUM_EPOCHS = 200
@@ -67,33 +70,35 @@ testloader = torch.utils.data.DataLoader(
 
 # load resnet101
 net = ResNet.ResNet101()
-net = nn.DataParallel(net, device_ids=device_ids)
+if len(device_ids) > 1:
+    net = nn.DataParallel(net, device_ids=device_ids)
 
 net.to(device0)
+model_ref = net.module if isinstance(net, nn.DataParallel) else net
 
 criterion_1 = nn.CrossEntropyLoss().to(device0)
 
 # define optimizer and loss function
 optimizer_1 = optim.SGD([
-    {'params': net.module.conv1.parameters()},
-    {'params': net.module.bn1.parameters()},
-    {'params': net.module.layer1.parameters()},
-    {'params': net.module.fc1.parameters()}
+    {'params': model_ref.conv1.parameters()},
+    {'params': model_ref.bn1.parameters()},
+    {'params': model_ref.layer1.parameters()},
+    {'params': model_ref.fc1.parameters()}
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update first layer
 
 optimizer_2 = optim.SGD([
-    {'params': net.module.layer2.parameters()},
-    {'params': net.module.fc2.parameters()}
+    {'params': model_ref.layer2.parameters()},
+    {'params': model_ref.fc2.parameters()}
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update second layer
 
 optimizer_3 = optim.SGD([
-    {'params': net.module.layer3.parameters()},
-    {'params': net.module.fc3.parameters()}
+    {'params': model_ref.layer3.parameters()},
+    {'params': model_ref.fc3.parameters()}
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update third layer
 
 optimizer_4 = optim.SGD([
-    {'params': net.module.layer4.parameters()},
-    {'params': net.module.fc4.parameters()}
+    {'params': model_ref.layer4.parameters()},
+    {'params': model_ref.fc4.parameters()}
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update fourth layer
 
 scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=NUM_EPOCHS)
@@ -109,7 +114,8 @@ log_file = open("101_training_log.txt", "w")
 log_file.write(
     f"CONFIG model=resnet101 outputs=4 epochs={NUM_EPOCHS} "
     f"batch_size={BATCH_SIZE} num_workers={NUM_WORKERS} lr=0.001 "
-    "weight_decay=0.0005 momentum=0.9\n"
+    f"weight_decay=0.0005 momentum=0.9 seed={SEED} "
+    f"deterministic={DETERMINISTIC} block_local=true\n"
 )
 log_file.flush()
 
@@ -208,7 +214,7 @@ for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
     test(epoch)
     if epoch % 5 == 0:
         check_path = os.path.join('temp', f'ResNet101_noBP_epoch{epoch + 1}.pth')
-        torch.save(net.state_dict(), check_path)
+        torch.save(model_ref.state_dict(), check_path)
     
     scheduler_1.step()
     scheduler_2.step()
@@ -218,5 +224,5 @@ for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
 log_file.close()
 # Save the trained weights
 save_path = 'resnet101_4out_imagenet.pth'
-torch.save(net.state_dict(), save_path)
+torch.save(model_ref.state_dict(), save_path)
 print("Trained weights saved to:", save_path)

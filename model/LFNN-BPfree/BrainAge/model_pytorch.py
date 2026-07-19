@@ -73,20 +73,22 @@ class CNN3D(nn.Module):
         ex1 = self.global_avg_pool(ex1)
         ex1 = torch.flatten(ex1,1)
         ex1 = self.classifier1(ex1)
-        
-        
+        x = x.detach()
+
         x = self.block2(x)
         ex2 = x
         ex2 = self.global_avg_pool(ex2)
         ex2 = torch.flatten(ex2,1)
         ex2 = self.classifier2(ex2)
-        
+        x = x.detach()
+
         x = self.block3(x)
         ex3 = x
         ex3 = self.global_avg_pool(ex3)
         ex3 = torch.flatten(ex3,1)
         ex3 = self.classifier3(ex3)
-        
+        x = x.detach()
+
         x = self.block4(x)
         x = self.global_avg_pool(x)
         x = torch.flatten(x, 1)  

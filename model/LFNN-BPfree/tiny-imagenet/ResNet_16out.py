@@ -126,90 +126,105 @@ class ResNet(nn.Module):
         ex1 = F.avg_pool2d(ex1, 20)
         ex1 = ex1.view(ex1.size(0), -1)
         ex1 = self.fc1(ex1)
+        out = out.detach()
 
         out = self.layer2(out)
         ex2 = out
         ex2 = F.avg_pool2d(ex2, 10)
         ex2 = ex2.view(ex2.size(0), -1)
         ex2 = self.fc2(ex2)
+        out = out.detach()
 
         out = self.layer3(out)
         ex3 = out
         ex3 = F.avg_pool2d(ex3, 8)
         ex3 = ex3.view(ex3.size(0), -1)
         ex3 = self.fc3(ex3)
+        out = out.detach()
 
         out = self.layer4(out)
         ex4 = out
         ex4 = F.avg_pool2d(ex4, 8)
         ex4 = ex4.view(ex4.size(0), -1)
         ex4 = self.fc4(ex4)
+        out = out.detach()
 
         out = self.layer5(out)
         ex5 = out
         ex5 = F.avg_pool2d(ex5, 8)
         ex5 = ex5.view(ex5.size(0), -1)
         ex5 = self.fc5(ex5)
+        out = out.detach()
 
         out = self.layer6(out)
         ex6 = out
         ex6 = F.avg_pool2d(ex6, 8)
         ex6 = ex6.view(ex6.size(0), -1)
         ex6 = self.fc6(ex6)
+        out = out.detach()
 
         out = self.layer7(out)
         ex7 = out
         ex7 = F.avg_pool2d(ex7, 8)
         ex7 = ex7.view(ex7.size(0), -1)
         ex7 = self.fc7(ex7)
+        out = out.detach()
 
         out = self.layer8(out)
         ex8 = out
         ex8 = F.avg_pool2d(ex8, 8)
         ex8 = ex8.view(ex8.size(0), -1)
         ex8 = self.fc8(ex8)
+        out = out.detach()
 
         out = self.layer9(out)
         ex9 = out
         ex9 = F.avg_pool2d(ex9, 8)
         ex9 = ex9.view(ex9.size(0), -1)
         ex9 = self.fc9(ex9)
+        out = out.detach()
 
         out = self.layer10(out)
         ex10 = out
         ex10 = F.avg_pool2d(ex10, 8)
         ex10 = ex10.view(ex10.size(0), -1)
         ex10 = self.fc10(ex10)
+        out = out.detach()
 
         out = self.layer11(out)
         ex11 = out
         ex11 = F.avg_pool2d(ex11, 8)
         ex11 = ex11.view(ex11.size(0), -1)
         ex11 = self.fc11(ex11)
+        out = out.detach()
 
         out = self.layer12(out)
         ex12 = out
         ex12 = F.avg_pool2d(ex12, 8)
         ex12 = ex12.view(ex12.size(0), -1)
         ex12 = self.fc12(ex12)
+        out = out.detach()
 
         out = self.layer13(out)
         ex13 = out
         ex13 = F.avg_pool2d(ex13, 8)
         ex13 = ex13.view(ex13.size(0), -1)
         ex13 = self.fc13(ex13)
+        out = out.detach()
 
         out = self.layer14(out)
         ex14 = out
         ex14 = F.avg_pool2d(ex14, 8)
         ex14 = ex14.view(ex14.size(0), -1)
         ex14 = self.fc14(ex14)
+        out = out.detach()
 
         out = self.layer15(out)
         ex15 = out
         ex15 = F.avg_pool2d(ex15, 8)
         ex15 = ex15.view(ex15.size(0), -1)
         ex15 = self.fc15(ex15)
+        out = out.detach()
 
         out = self.layer16(out)
         out = F.avg_pool2d(out, 4)
@@ -232,11 +247,11 @@ class ResNet(nn.Module):
 
 
 def ResNet101(num_classes=1000):
-    return ResNet(Bottleneck, [3, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3], num_classes)
+    return ResNet(Bottleneck, [3, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3], num_classes)
 
 
 def ResNet152(num_classes=1000):
-    return ResNet(Bottleneck, [3, 8, 5, 4, 3, 3, 3, 3, 3, 3, 3, 3], num_classes)
+    return ResNet(Bottleneck, [3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 3], num_classes)
 
 
 def test():

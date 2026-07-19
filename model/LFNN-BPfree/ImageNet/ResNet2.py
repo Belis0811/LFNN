@@ -98,6 +98,7 @@ class ResNet(nn.Module):
         ex2 = F.avg_pool2d(ex2, 40)
         ex2 = ex2.view(ex2.size(0), -1)
         ex2 = self.fc2(ex2)
+        out = out.detach()
 
         out = self.layer3(out)
         out = self.layer4(out)

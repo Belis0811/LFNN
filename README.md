@@ -12,13 +12,24 @@ Or run the following code to install:
 pip install -r requirements.txt
 ```
 
-#### Reproducing the released logs
+#### Experiment scope and reproducibility
 
-The Colab notebooks use reduced demo settings so that they finish in an
-interactive session. The table-producing defaults are recorded in
+The dynamic top-delta leader selection and follower-to-best-leader MSE are
+implemented by the MNIST, CIFAR-10, and ImageNet-subset scripts under
+`model/LFNN`. The scaled ViT, ResNet, brain-age, Tiny-ImageNet, and cell
+trainers under `model/LFNN-BPfree` implement the LFNN-l special case as
+block-local deep supervision; they do not perform dynamic leader selection.
+
+The table-producing hyperparameters transcribed from the released logs are recorded in
 [`experiment_configs.json`](experiment_configs.json) and in the executable
 training scripts. Each manifest entry links one code path to one released log
 and records the batch size, epoch count, optimizer, and leadership setting.
+
+The current scaled trainers also contain correctness repairs to device handling,
+block boundaries, model forward passes, and evaluation. Those repairs change
+the implementation relative to the historical log-producing source. Therefore,
+the historical logs must not be presented as outputs of the corrected code;
+fresh runs and logs are required before reporting results from this revision.
 
 Leader-follower runs corresponding to the released MNIST, CIFAR-10, and
 ImageNet-subset logs:
@@ -32,7 +43,7 @@ python model/LFNN/ImageNet_LFNN_subset.py
 The full ImageNet ViT run uses the logged configuration of 90 epochs, batch
 size 256, two CUDA devices, and SWAG initialization. Data-loader and scheduler
 settings that were not printed in the log retain the values from the released
-training source:
+training source. `main.ipynb` contains the same source as `train_vit.py`:
 
 ```
 cd model/LFNN-BPfree/ImageNet
@@ -49,7 +60,8 @@ python ResNet152_4outputs.py
 ```
 
 The BP trainer selects the corresponding experiment preset from `--model`. Command-line
-arguments or `LFNN_*` environment variables may still override a preset:
+arguments or `LFNN_*` environment variables may still override a preset. Set
+`LFNN_SEED` for each replicate and record the generated log and checkpoints:
 
 ```
 python model/BP/train_imagenet_bp_baseline.py --model vit_b_16 --data-root /path/to/imagenet --output-dir runs/vit_bp
@@ -158,5 +170,11 @@ cd LFNN/model/LFNN-BPfree/Cell
 Train our LFNN-UNet model with 'live_dead_segment.ipynb'
 
 Sample data are stored under the **data** folder in the **Cell** directory
+
+The notebook uses an 80/10/10 seeded split, reports macro metrics on a labeled
+held-out test set, and interprets processed mask IDs as `0=background`,
+`1=live`, and `2=dead`. It does not merge or remap an injured class. Any
+upstream class conversion used to create the `.npy` masks must be disclosed
+alongside comparisons with E-U-Net.
 
 

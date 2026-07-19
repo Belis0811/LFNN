@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Authoritative defaults for the released training logs. Demo notebooks are intentionally separate from these table-producing configurations.",
+  "purpose": "Hyperparameters transcribed from released logs. Corrected scaled trainers require fresh runs; historical logs are not evidence for the corrected implementation.",
   "runs": {
     "cifar10_lfnn_l": {
       "code": "model/LFNN/Cifar10_LFNN.py",
@@ -13,7 +13,9 @@
       "num_workers": 32,
       "requested_leader_fraction": 0.7,
       "realized_leader_count": 23,
-      "realized_leader_fraction": 0.71875
+      "realized_leader_fraction": 0.71875,
+      "training_scope": "dynamic leader-follower selection and follower MSE",
+      "seed": 42
     },
     "mnist_lfnn_l": {
       "code": "model/LFNN/MNIST_LFNN.py",
@@ -26,7 +28,9 @@
       "num_workers": 32,
       "requested_leader_fraction": 0.7,
       "realized_leader_count": 23,
-      "realized_leader_fraction": 0.71875
+      "realized_leader_fraction": 0.71875,
+      "training_scope": "dynamic leader-follower selection and follower MSE",
+      "seed": 42
     },
     "imagenet_subset_lfnn_l": {
       "code": "model/LFNN/ImageNet_LFNN_subset.py",
@@ -41,7 +45,9 @@
       "num_workers": 32,
       "requested_leader_fraction": 0.9,
       "realized_leader_count": 29,
-      "realized_leader_fraction": 0.90625
+      "realized_leader_fraction": 0.90625,
+      "training_scope": "dynamic leader-follower selection and follower MSE",
+      "seed": 42
     },
     "vit_b_16_lfnn_l_imagenet": {
       "code": "model/LFNN-BPfree/ImageNet/train_vit.py",
@@ -62,7 +68,10 @@
       "weight_decay": 0.0005,
       "scheduler": "CosineAnnealingLR",
       "scheduler_t_max": 200,
-      "log_interval": 50
+      "log_interval": 50,
+      "training_scope": "LFNN-l block-local deep supervision; no dynamic leader selection",
+      "seed_control": "LFNN_SEED (default 42)",
+      "corrected_code_requires_fresh_log": true
     },
     "resnet101_lfnn_l_imagenet": {
       "code": "model/LFNN-BPfree/ImageNet/ResNet101_4outputs.py",
@@ -76,7 +85,10 @@
       "momentum": 0.9,
       "weight_decay": 0.0005,
       "scheduler": "CosineAnnealingLR",
-      "scheduler_t_max": 200
+      "scheduler_t_max": 200,
+      "training_scope": "LFNN-l block-local deep supervision; no dynamic leader selection",
+      "seed_control": "LFNN_SEED (default 42)",
+      "corrected_code_requires_fresh_log": true
     },
     "resnet152_lfnn_l_imagenet": {
       "code": "model/LFNN-BPfree/ImageNet/ResNet152_4outputs.py",
@@ -90,7 +102,10 @@
       "momentum": 0.9,
       "weight_decay": 0.0005,
       "scheduler": "CosineAnnealingLR",
-      "scheduler_t_max": 200
+      "scheduler_t_max": 200,
+      "training_scope": "LFNN-l block-local deep supervision; no dynamic leader selection",
+      "seed_control": "LFNN_SEED (default 42)",
+      "corrected_code_requires_fresh_log": true
     },
     "brain_age_lfnn_l": {
       "code": "model/LFNN-BPfree/BrainAge/train_BP_free.py",
@@ -101,7 +116,9 @@
       "learning_rate": 0.0001,
       "weight_decay": 0.01,
       "seed": 42,
-      "test_fraction": 0.2
+      "test_fraction": 0.2,
+      "training_scope": "LFNN-l block-local deep supervision; no dynamic leader selection",
+      "corrected_code_requires_fresh_log": true
     },
     "vit_b_16_bp_imagenet": {
       "code": "model/BP/train_imagenet_bp_baseline.py",
@@ -116,7 +133,10 @@
       "momentum": 0.9,
       "weight_decay": 0.0005,
       "scheduler": "CosineAnnealingLR",
-      "eta_min": 0.0
+      "eta_min": 0.0,
+      "code_default_seed": 42,
+      "released_log_seed": "not recorded",
+      "corrected_code_requires_fresh_log": true
     },
     "resnet101_bp_imagenet": {
       "code": "model/BP/train_imagenet_bp_baseline.py",
@@ -131,7 +151,10 @@
       "momentum": 0.9,
       "weight_decay": 0.00005,
       "scheduler": "CosineAnnealingLR",
-      "eta_min": 0.0001
+      "eta_min": 0.0001,
+      "code_default_seed": 42,
+      "released_log_seed": "not recorded",
+      "corrected_code_requires_fresh_log": true
     },
     "resnet152_bp_imagenet": {
       "code": "model/BP/train_imagenet_bp_baseline.py",
@@ -146,7 +169,10 @@
       "momentum": 0.9,
       "weight_decay": 0.00005,
       "scheduler": "CosineAnnealingLR",
-      "eta_min": 0.00001
+      "eta_min": 0.00001,
+      "code_default_seed": 42,
+      "released_log_seed": "not recorded",
+      "corrected_code_requires_fresh_log": true
     }
   }
 }

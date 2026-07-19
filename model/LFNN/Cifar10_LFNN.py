@@ -26,6 +26,7 @@ class LFConfig:
     follower_weight: float = 1.0
     leader_weight: float = 1.0
     global_weight: float = 1.0
+    # Include CE from the model output head. The released LFNN-l run uses True.
     use_global_loss: bool = True
     temperature: float = 1.0
 
@@ -152,7 +153,7 @@ class LFClassifier(tf.keras.Model):
         self.cfg = cfg
 
         self.loss_tracker = tf.keras.metrics.Mean(name="loss")
-        self.global_loss_tracker = tf.keras.metrics.Mean(name="global_loss")
+        self.global_loss_tracker = tf.keras.metrics.Mean(name="local_output_loss")
         self.leader_loss_tracker = tf.keras.metrics.Mean(name="leader_loss")
         self.follower_loss_tracker = tf.keras.metrics.Mean(name="follower_loss")
         self.acc_metric = tf.keras.metrics.SparseCategoricalAccuracy(name="acc")

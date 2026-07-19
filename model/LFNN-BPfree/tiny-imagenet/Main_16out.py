@@ -1,4 +1,8 @@
 '''Train Tiny ImageNet with PyTorch.'''
+import os
+import random
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -8,8 +12,15 @@ import torchvision.transforms as transforms
 import ResNet_16out
 import tiny_imagenet_loader
 
+SEED = int(os.environ.get('LFNN_SEED', '42'))
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(SEED)
+
 device_id = 0
-device = torch.device('cuda:{}'.format(device_id)) if torch.cuda.is_available() else 'cpu'
+device = torch.device('cuda:{}'.format(device_id) if torch.cuda.is_available() else 'cpu')
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 
 # get directory
@@ -41,8 +52,7 @@ testloader = torch.utils.data.DataLoader(
 net = ResNet_16out.ResNet101(num_classes=200)
 # net = ResNet_16out.ResNet152(num_classes=200)
 net = net.to(device)
-if device == 'cuda':
-    net = torch.nn.DataParallel(net)
+if device.type == 'cuda':
     cudnn.benchmark = True
 
 criterion = nn.CrossEntropyLoss()
@@ -129,6 +139,10 @@ optimizer_16 = optim.SGD([
     {'params': net.fc16.parameters()}
 ], lr=0.1, momentum=0.9, weight_decay=5e-4)  # update layer3 and 4
 
+model_ref = net
+if torch.cuda.device_count() > 1:
+    net = torch.nn.DataParallel(net)
+
 scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=400)
 scheduler_2 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_2, T_max=400)
 scheduler_3 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_3, T_max=400)
@@ -154,6 +168,7 @@ test_acc_best = 0
 epoch_acc_best = 0
 model_best = None
 epoch_num = 200
+print(f'CONFIG outputs=16 epochs={epoch_num} batch_size=32 seed={SEED} block_local=true')
 
 
 # Training
@@ -186,49 +201,49 @@ def train(epoch):
         outputs, extra_1, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, extra_10, extra_11, extra_12, extra_13, extra_14, extra_15 = net(
             inputs)
         loss_1 = criterion(extra_1, targets)
-        loss_1.backward(retain_graph=True)
+        loss_1.backward()
 
         loss_2 = criterion(extra_2, targets)
-        loss_2.backward(retain_graph=True)
+        loss_2.backward()
 
         loss_3 = criterion(extra_3, targets)
-        loss_3.backward(retain_graph=True)
+        loss_3.backward()
 
         loss_4 = criterion(extra_4, targets)
-        loss_4.backward(retain_graph=True)
+        loss_4.backward()
 
         loss_5 = criterion(extra_5, targets)
-        loss_5.backward(retain_graph=True)
+        loss_5.backward()
 
         loss_6 = criterion(extra_6, targets)
-        loss_6.backward(retain_graph=True)
+        loss_6.backward()
 
         loss_7 = criterion(extra_7, targets)
-        loss_7.backward(retain_graph=True)
+        loss_7.backward()
 
         loss_8 = criterion(extra_8, targets)
-        loss_8.backward(retain_graph=True)
+        loss_8.backward()
 
         loss_9 = criterion(extra_9, targets)
-        loss_9.backward(retain_graph=True)
+        loss_9.backward()
 
         loss_10 = criterion(extra_10, targets)
-        loss_10.backward(retain_graph=True)
+        loss_10.backward()
 
         loss_11 = criterion(extra_11, targets)
-        loss_11.backward(retain_graph=True)
+        loss_11.backward()
 
         loss_12 = criterion(extra_12, targets)
-        loss_12.backward(retain_graph=True)
+        loss_12.backward()
 
         loss_13 = criterion(extra_13, targets)
-        loss_13.backward(retain_graph=True)
+        loss_13.backward()
 
         loss_14 = criterion(extra_14, targets)
-        loss_14.backward(retain_graph=True)
+        loss_14.backward()
 
         loss_15 = criterion(extra_15, targets)
-        loss_15.backward(retain_graph=True)
+        loss_15.backward()
 
         loss_16 = criterion(outputs, targets)
         loss_16.backward()
@@ -289,7 +304,7 @@ def test(epoch):
     if acc > test_acc_best:
         test_acc_best = acc
         epoch_acc_best = epoch
-        model_best = net.state_dict()
+        model_best = model_ref.state_dict()
 
     test_losses.append(test_loss / len(testloader))
 
@@ -316,5 +331,5 @@ for epoch in range(start_epoch, start_epoch + epoch_num):
 
 # Save the trained weights
 save_path = 'resnet101_dis16_tinyImagenet.pth'
-torch.save(net.state_dict(), save_path)
+torch.save(model_ref.state_dict(), save_path)
 print("Trained weights saved to:", save_path)

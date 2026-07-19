@@ -7,8 +7,10 @@
 
 '''Train ImageNet with PyTorch.'''
 import os
+import random
 import time
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -21,8 +23,16 @@ import torch.backends.cudnn as cudnn
 
 from torchvision.models import vit_b_16, ViT_B_16_Weights
 
-#os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-cudnn.benchmark = True
+# Set LFNN_SEED per run (for example 42, 123, and 2024 for a three-seed table).
+SEED = int(os.environ.get("LFNN_SEED", "42"))
+DETERMINISTIC = os.environ.get("LFNN_DETERMINISTIC", "0") == "1"
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(SEED)
+cudnn.benchmark = not DETERMINISTIC
+cudnn.deterministic = DETERMINISTIC
 
 # Authoritative settings recorded in model/LFNN/vit_training_log.txt.
 BATCH_SIZE = 256
@@ -38,7 +48,7 @@ SCHEDULER_T_MAX = 200
 # else:
 #     device = 'cpu'
 
-device0 = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+device0 = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 #print(device0)
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 
@@ -131,55 +141,30 @@ if torch.cuda.device_count() > 1:
     net = nn.DataParallel(net)
 
 net.to(device0)
+model_ref = net.module if isinstance(net, nn.DataParallel) else net
 
 criterion_1 = nn.CrossEntropyLoss().to(device0)
 
 # define optimizer and loss function
 optimizer_1 = optim.SGD([
-    {'params': net.module.encoder.layers[:3].parameters()},
+    {'params': model_ref.conv_proj.parameters()},
+    {'params': [model_ref.class_token, model_ref.encoder.pos_embedding]},
+    {'params': model_ref.encoder.layers[:3].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update first layer
 
 optimizer_2 = optim.SGD([
-    {'params': net.module.encoder.layers[3:6].parameters()},
+    {'params': model_ref.encoder.layers[3:6].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update second layer
 
 optimizer_3 = optim.SGD([
-     {'params': net.module.encoder.layers[6:9].parameters()},
+     {'params': model_ref.encoder.layers[6:9].parameters()},
 ], lr=0.001, weight_decay=5e-4,momentum=0.9)  # update third layer
 
 optimizer_4 = optim.SGD([
-    {'params': net.module.encoder.layers[9:].parameters()},
-    {'params': net.module.heads.parameters()},
+    {'params': model_ref.encoder.layers[9:].parameters()},
+    {'params': model_ref.encoder.ln.parameters()},
+    {'params': model_ref.heads.parameters()},
 ], lr=0.001,weight_decay=5e-4,momentum=0.9)  # update fourth layer
-
-# for param in net.module.mlp_head2.parameters():
-#     param.requires_grad = False
-
-# for param in net.module.mlp_head3.parameters():
-#     param.requires_grad = False
-
-# for param in net.module.mlp_head4.parameters():
-#     param.requires_grad = False
-
-# optimizer_1 = optim.SGD([
-#     {'params': net.module.transformer_blocks[:3].parameters()},
-#     {'params': net.module.mlp_head1.parameters()}
-# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
-
-# optimizer_2 = optim.SGD([
-#     {'params': net.module.transformer_blocks[3:6].parameters()},
-#      {'params': net.module.mlp_head2.parameters()}
-# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
-
-# optimizer_3 = optim.SGD([
-#     {'params': net.module.transformer_blocks[6:9].parameters()},
-#      {'params': net.module.mlp_head3.parameters()}
-# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
-
-# optimizer_4 = optim.SGD([
-#     {'params': net.module.transformer_blocks[9:].parameters()},
-#      {'params': net.module.mlp_head4.parameters()}
-# ], lr=0.001, momentum=0.9, weight_decay=5e-4)
 
 scheduler_1 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_1, T_max=SCHEDULER_T_MAX)
 scheduler_2 = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_2, T_max=SCHEDULER_T_MAX)
@@ -194,6 +179,7 @@ test_losses = []
 log_file = open("vit_training_log.txt", "w")
 config_line = (
     f"ViT config: batch_size={BATCH_SIZE}, epochs={NUM_EPOCHS}, "
+    f"seed={SEED}, deterministic={DETERMINISTIC}, block_local=True, "
     f"cuda_devices={torch.cuda.device_count()}, train_batches={len(trainloader)}, "
     f"test_batches={len(testloader)}"
 )
@@ -227,18 +213,13 @@ def train(epoch):
 
         outputs, extra_1, extra_2, extra_3 = net(inputs)
         loss_1 = criterion_1(extra_1, targets)
-        #loss_1.backward(retain_graph=True)
 
         loss_2 = criterion_1(extra_2, targets)
-        #loss_2.backward(retain_graph=True)
 
         loss_3 = criterion_1(extra_3, targets)
-        #loss_3.backward(retain_graph=True)
 
         loss_4 = criterion_1(outputs, targets)
-        #loss_4.backward(retain_graph=True)
 
-        #loss = 0.5*loss_1 + 0.5*loss_2 + 0.5*loss_3 + loss_4
         loss = 0.5 * (loss_1 + loss_2 + loss_3) + loss_4
         loss.backward()
 
@@ -307,7 +288,7 @@ for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
     test(epoch)
 
     check_path = os.path.join('temp', f'vit_epoch{epoch + 1}.pth')
-    torch.save(net.state_dict(), check_path)
+    torch.save(model_ref.state_dict(), check_path)
 
     scheduler_1.step()
     scheduler_2.step()
@@ -317,5 +298,5 @@ for epoch in range(start_epoch, start_epoch + NUM_EPOCHS):
 log_file.close()
 # Save the trained weights
 save_path = 'vit_4out_imagenet.pth'
-torch.save(net.state_dict(), save_path)
+torch.save(model_ref.state_dict(), save_path)
 print("Trained weights saved to:", save_path)

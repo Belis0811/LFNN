@@ -27,8 +27,9 @@ def seed_everything(seed=42):
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
     # some cudnn methods can be random even after fixing the seed
     # unless you tell it to be deterministic
     torch.backends.cudnn.deterministic = True
@@ -39,7 +40,7 @@ def train_model(train_loader, test_loader, model, weight_dir, is_loaded, weight_
     save_interval = 10
 
     if is_loaded:
-        weights = torch.load(weight_path)
+        weights = torch.load(weight_path, map_location=device)
         model.load_state_dict(weights)
 
     model.to(device)
@@ -122,18 +123,18 @@ def train_model(train_loader, test_loader, model, weight_dir, is_loaded, weight_
 
             # outputs = model(inputs)
             out1, out2, out3, out4 = model(inputs)
-            out1 = torch.squeeze(out1)
-            out2 = torch.squeeze(out2)
-            out3 = torch.squeeze(out3)
-            out4 = torch.squeeze(out4)
+            out1 = out1.reshape(-1)
+            out2 = out2.reshape(-1)
+            out3 = out3.reshape(-1)
+            out4 = out4.reshape(-1)
             # print(f'model output shape {outputs.shape}, label shape {labels.shape}')
             # print(f'model output {outputs}, label {labels}')
             loss1 = criterion(out1, labels)
-            loss1.backward(retain_graph=True)
+            loss1.backward()
             loss2 = criterion(out2, labels)
-            loss2.backward(retain_graph=True)
+            loss2.backward()
             loss3 = criterion(out3, labels)
-            loss3.backward(retain_graph=True)
+            loss3.backward()
             loss4 = criterion(out4, labels)
             loss4.backward()
 
@@ -181,7 +182,7 @@ def test_model(test_loader, model, criterion):
         for i, data in progress_bar:
             inputs, labels = data[0].to(device), data[1].to(device)
             out1, out2, out3, out4 = model(inputs)
-            outputs = torch.squeeze(out4)
+            outputs = out4.reshape(-1)
             loss = criterion(outputs, labels)
             total_loss += loss.item()
 
@@ -224,14 +225,17 @@ class WarmupCosineSchedule(LambdaLR):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # torch.manual_seed(42)
-    # np.random.seed(42)
-    seed_everything(42)
+    run_seed = int(os.environ.get('LFNN_SEED', '42'))
+    seed_everything(run_seed)
 
     is_loaded = False
     start_epoch = 0
     # Authoritative run length recorded in model/LFNN/brainage_log.csv.
     num_epochs = 100
+    print(
+        f'CONFIG epochs={num_epochs} batch_size=1 seed={run_seed} '
+        'test_fraction=0.2 block_local=true'
+    )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # device = torch.device("cuda:1")
@@ -281,7 +285,9 @@ if __name__ == '__main__':
     y = torch.tensor(y, dtype=torch.float32)
 
 
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.2, random_state=run_seed
+    )
 
     train_dataset = TensorDataset(x_train, y_train)
     test_dataset = TensorDataset(x_test, y_test)

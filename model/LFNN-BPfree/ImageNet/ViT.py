@@ -1,4 +1,6 @@
 import math
+import warnings
+from collections.abc import Sequence
 from collections import OrderedDict
 from functools import partial
 from typing import Any, Callable, Dict, List, NamedTuple, Optional, Union, Tuple
@@ -8,6 +10,13 @@ import torch.nn as nn
 
 from torch import Tensor
 from types import FunctionType
+
+
+def _make_ntuple(value: Any, n: int) -> Tuple[Any, ...]:
+    """Return ``value`` as an n-tuple, matching torchvision's helper."""
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        return tuple(value)
+    return (value,) * n
 
 def _log_api_usage_once(obj: Any) -> None:
 
@@ -345,6 +354,7 @@ class ViT(nn.Module):
         representation_size: Optional[int] = None,
         norm_layer: Callable[..., torch.nn.Module] = partial(nn.LayerNorm, eps=1e-6),
         conv_stem_configs: Optional[List[ConvStemConfig]] = None,
+        detach_block_boundaries: bool = True,
     ):
         super().__init__()
         _log_api_usage_once(self)
@@ -358,6 +368,7 @@ class ViT(nn.Module):
         self.num_classes = num_classes
         self.representation_size = representation_size
         self.norm_layer = norm_layer
+        self.detach_block_boundaries = detach_block_boundaries
 
         if conv_stem_configs is not None:
             # As per https://arxiv.org/abs/2106.14881
@@ -466,21 +477,28 @@ class ViT(nn.Module):
         batch_class_token = self.class_token.expand(n, -1, -1)
         x = torch.cat([batch_class_token, x], dim=1)
         
+        # Reproduce Encoder.forward one layer at a time so the auxiliary heads
+        # observe the output of successive blocks rather than the same input.
+        x = self.encoder.dropout(x + self.encoder.pos_embedding)
         extra = []
         for i, layer in enumerate(self.encoder.layers):
-            ex = layer(x)
-            if i in {3,7,11}:
-                ex = ex[:,0]
-                ex = self.heads(ex)
-                extra.append(ex)
-                
-        x = self.encoder(x)
+            x = layer(x)
+            if i in {2, 5, 8}:
+                extra.append(self.heads(x[:, 0]))
+                if self.detach_block_boundaries:
+                    x = x.detach()
+
+        x = self.encoder.ln(x)
 
         # Classifier "token" as used by standard language architectures
         x = x[:, 0]
 
         x = self.heads(x)
 
+        if len(extra) != 3:
+            raise RuntimeError(
+                "LFNN ViT requires at least nine encoder layers to form four blocks"
+            )
         return x, extra[0], extra[1], extra[2]
 
 def test():

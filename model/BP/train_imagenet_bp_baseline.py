@@ -13,9 +13,11 @@ import datetime as dt
 import hashlib
 import json
 import os
+import random
 import time
 from pathlib import Path
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -36,6 +38,8 @@ EXPERIMENT_PRESETS = {
         "momentum": 0.9,
         "log_interval": 50,
         "checkpoint_every": 5,
+        "seed": 42,
+        "scheduler_t_max": 90,
     },
     "resnet152": {
         "init": "scratch",
@@ -48,6 +52,8 @@ EXPERIMENT_PRESETS = {
         "momentum": 0.9,
         "log_interval": 50,
         "checkpoint_every": 5,
+        "seed": 42,
+        "scheduler_t_max": 90,
     },
     "vit_b_16": {
         "init": "swag_e2e_ignore_mismatch_224",
@@ -60,6 +66,8 @@ EXPERIMENT_PRESETS = {
         "momentum": 0.9,
         "log_interval": 50,
         "checkpoint_every": 5,
+        "seed": 42,
+        "scheduler_t_max": 200,
     },
 }
 
@@ -200,6 +208,8 @@ def main() -> int:
     parser.add_argument("--momentum", type=float, default=None)
     parser.add_argument("--log-interval", type=int, default=None)
     parser.add_argument("--checkpoint-every", type=int, default=None)
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--scheduler-t-max", type=int, default=None)
     args = parser.parse_args()
 
     preset = EXPERIMENT_PRESETS[args.model]
@@ -219,6 +229,16 @@ def main() -> int:
     args.checkpoint_every = resolve_setting(
         args.checkpoint_every, "LFNN_CHECKPOINT_EVERY", preset["checkpoint_every"], int
     )
+    args.seed = resolve_setting(args.seed, "LFNN_SEED", preset["seed"], int)
+    args.scheduler_t_max = resolve_setting(
+        args.scheduler_t_max, "LFNN_SCHEDULER_T_MAX", preset["scheduler_t_max"], int
+    )
+
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(args.seed)
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -246,6 +266,8 @@ def main() -> int:
             "weight_decay": args.weight_decay,
             "momentum": args.momentum,
             "scheduler": "CosineAnnealingLR",
+            "scheduler_t_max": args.scheduler_t_max,
+            "seed": args.seed,
             "preset": "released_experiment",
             "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES", ""),
             "cuda_device_count": torch.cuda.device_count(),
@@ -277,10 +299,13 @@ def main() -> int:
         if len(device_ids) > 1:
             model = nn.DataParallel(model, device_ids=device_ids)
         model.to(device)
+        model_ref = model.module if isinstance(model, nn.DataParallel) else model
 
         criterion = nn.CrossEntropyLoss().to(device)
         optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
-        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=args.eta_min)
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=args.scheduler_t_max, eta_min=args.eta_min
+        )
 
         best_top1 = 0.0
         best_path: Path | None = None
@@ -343,7 +368,7 @@ def main() -> int:
                 f"val_top5={val_top5_pct:.3f} elapsed_sec={time.time() - epoch_start:.1f}",
             )
 
-            state = model.state_dict()
+            state = model_ref.state_dict()
             if val_top1_pct > best_top1:
                 best_top1 = val_top1_pct
                 best_path = checkpoint_dir / f"{args.model}_bp_best.pth"
@@ -356,7 +381,7 @@ def main() -> int:
             scheduler.step()
 
         final_path = checkpoint_dir / f"{args.model}_bp_final.pth"
-        torch.save(model.state_dict(), final_path)
+        torch.save(model_ref.state_dict(), final_path)
         log_line(log, f"CHECKPOINT final path={final_path}")
         for path in sorted(checkpoint_dir.glob("*.pth")):
             log_line(log, f"ARTIFACT path={path} bytes={path.stat().st_size} sha256={sha256_file(path)}")
