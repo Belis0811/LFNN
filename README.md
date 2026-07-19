@@ -53,8 +53,8 @@ cd model/LFNN-BPfree/ImageNet
 python train_vit.py
 ```
 
-The four-output ImageNet ResNet runs use 200 epochs, matching the released
-200-epoch logs:
+The four-output ImageNet ResNet runs use 90 epochs, matching the released
+90-epoch logs:
 
 ```
 cd model/LFNN-BPfree/ImageNet
