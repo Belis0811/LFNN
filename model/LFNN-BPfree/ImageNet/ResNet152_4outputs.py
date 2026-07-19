@@ -18,7 +18,7 @@ device0 = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 device_ids = list(range(torch.cuda.device_count()))
 
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
-NUM_EPOCHS = 200
+NUM_EPOCHS = 90
 BATCH_SIZE = 118
 NUM_WORKERS = 5
 
