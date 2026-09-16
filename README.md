@@ -14,64 +14,119 @@ pip install -r requirements.txt
 
 #### Experiment scope and reproducibility
 
-The dynamic top-delta leader selection and follower-to-best-leader MSE are
-implemented by the MNIST, CIFAR-10, and ImageNet-subset `*_detailed.ipynb`
-notebooks under `model/LFNN`. The matching `.py` files are executable exports.
-The scaled ViT, ResNet, brain-age, Tiny-ImageNet, and cell trainers under
-`model/LFNN-BPfree` implement the delta=100% all-leader case with multiple
-supervised outputs; they do not perform dynamic leader selection or follower
-alignment.
+The MNIST, CIFAR-10, and ImageNet-subset partial-leadership implementations
+are the detailed notebooks and executable exports under `model/LFNN`.
+They implement leader selection and follower-to-leader MSE. The scaled
+multi-output trainers under `model/LFNN-BPfree` use the delta=100% all-leader
+case, without follower selection or follower alignment. A log's storage
+directory does not identify its training implementation.
 
-The table-producing hyperparameters transcribed from the released logs are
-recorded in [`experiment_configs.json`](experiment_configs.json) and in the
-training sources. For partial-leadership runs, each manifest entry links the
-detailed notebook, its executable export, and the released log. It also records
-the batch size, epoch count, optimizer, and leadership setting.
+The explicit source/log associations in
+[`experiment_configs.json`](experiment_configs.json) are:
 
-The log-mapped ViT, ResNet, and brain-age training paths preserve the
-optimization graphs, optimizer membership, epoch budgets, batch sizes, and
-learning-rate schedules used by the corresponding logged runs. Portability
-fixes for CPU/single-GPU execution and checkpoint access do not insert new
-gradient-detach boundaries or otherwise change the logged training objectives.
+| Experiment | Detailed notebook | Executable export | Released log |
+| --- | --- | --- | --- |
+| MNIST partial leadership | [MNIST_LFNN_detailed.ipynb](model/LFNN/MNIST_LFNN_detailed.ipynb) | [MNIST_LFNN.py](model/LFNN/MNIST_LFNN.py) | [mnist_lfnn_l_training_log.txt](model/LFNN-BPfree/mnist_lfnn_l_training_log.txt) |
+| CIFAR-10 partial leadership | [Cifar10_LFNN_detailed.ipynb](model/LFNN/Cifar10_LFNN_detailed.ipynb) | [Cifar10_LFNN.py](model/LFNN/Cifar10_LFNN.py) | [cifar10_lfnn_l_training_log.txt](model/LFNN-BPfree/cifar10_lfnn_l_training_log.txt) |
+| ImageNet subset partial leadership | [ImageNet_LFNN_detailed.ipynb](model/LFNN/ImageNet_LFNN_detailed.ipynb) | [ImageNet_LFNN_subset.py](model/LFNN/ImageNet_LFNN_subset.py) | [imagenet__lfnn_l_training_log.txt](model/LFNN-BPfree/imagenet__lfnn_l_training_log.txt) |
 
-The detailed notebooks and these executable exports use the full configurations
-corresponding to the released MNIST, CIFAR-10, and ImageNet-subset logs:
+These associations document the intended experiment mapping; agreement between
+a released source and log alone does not establish the exact source revision
+executed. Configuration fields printed during a run and settings documented
+in the released source must be distinguished. A field absent from a historical
+log must not be described as directly recorded in that log. Source revisions,
+resolved configurations, execution commands, and output hashes should accompany
+new runs.
 
-```
+The partial-leadership exports currently enable `use_global_loss=True` by
+default, adding a global output cross-entropy to the leader and follower
+objectives. Their default objective should therefore not be described as
+having only local losses. This is separate from the block-local ViT control
+described below.
+
+Run the released partial-leadership exports with:
+
+```bash
 python model/LFNN/MNIST_LFNN.py
 python model/LFNN/Cifar10_LFNN.py
 python model/LFNN/ImageNet_LFNN_subset.py
 ```
 
-The full ImageNet ViT run uses the logged configuration of 90 epochs, batch
-size 256, two CUDA devices, and SWAG initialization. Data-loader and scheduler
-settings that were not printed in the log retain the values from the released
-training source. `main.ipynb` contains the same source as `train_vit.py`:
+#### Released ImageNet training configurations
 
-```
+The historical LFNN ViT log records 90 epochs, batch size 256, two CUDA
+devices, and SWAG initialization. The released
+[`train_vit.py`](model/LFNN-BPfree/ImageNet/train_vit.py) and configuration
+manifest specify the remaining training settings, including two data-loader
+workers and `CosineAnnealingLR(T_max=200)`. Settings obtained from the
+released source are source-documented settings, not additional fields in the
+historical log.
+
+```bash
 cd model/LFNN-BPfree/ImageNet
 python train_vit.py
 ```
 
-The four-output ImageNet ResNet runs use 90 epochs, matching the released
-90-epoch logs:
+The BP trainer uses the following released presets. All three presets train
+for 90 epochs with batch size 256, eight data-loader workers, SGD with
+momentum 0.9, and an epoch-stepped cosine learning-rate schedule:
 
+| BP model | Initialization | Initial LR | Weight decay | Cosine T_max | eta_min |
+| --- | --- | --- | --- | --- | --- |
+| ViT-B/16 | SWAG E2E at 224; incompatible positional embedding excluded | 0.001 | 0.0005 | 90 | 0 |
+| ResNet-101 | From scratch | 0.1 | 0.00005 | 89 | 0.0001 |
+| ResNet-152 | From scratch | 0.05 | 0.00005 | 89 | 0.00001 |
+
+The historical ViT BP log explicitly identifies `CosineAnnealingLR`; its
+configuration header does not print `T_max`. The table reports the preset
+in the released source and manifest. The historical BP and LFNN ViT recipes
+have different scheduler periods (90 and 200, respectively), so they should
+not be described as identical training configurations. Specifying SGD and
+its initial learning rate alone is not a complete description of either
+scheduled run.
+
+Command-line arguments or `LFNN_*` environment variables may override BP
+presets. Inspect the resolved configuration for the actual invocation:
+
+```bash
+python model/BP/train_imagenet_bp_baseline.py --model vit_b_16 --data-root /path/to/imagenet --output-dir runs/vit_bp
+python model/BP/train_imagenet_bp_baseline.py --model resnet101 --data-root /path/to/imagenet --output-dir runs/resnet101_bp
+python model/BP/train_imagenet_bp_baseline.py --model resnet152 --data-root /path/to/imagenet --output-dir runs/resnet152_bp
 ```
+
+The released four-output LFNN ResNet trainers use 90 epochs and cosine
+`T_max=200`; see the manifest for their model-specific batch sizes and
+optimizer settings:
+
+```bash
 cd model/LFNN-BPfree/ImageNet
 python ResNet101_4outputs.py
 python ResNet152_4outputs.py
 ```
 
-The BP trainer selects the corresponding experiment preset from `--model`.
-Command-line arguments or `LFNN_*` environment variables may still override a
-preset. Each cosine schedule uses the `T_max` recorded by the corresponding
-released BP learning-rate trace:
+#### Matched ViT-B/16 control at 224 x 224
 
-```
-python model/BP/train_imagenet_bp_baseline.py --model vit_b_16 --data-root /path/to/imagenet --output-dir runs/vit_bp
-python model/BP/train_imagenet_bp_baseline.py --model resnet101 --data-root /path/to/imagenet --output-dir runs/resnet101_bp
-python model/BP/train_imagenet_bp_baseline.py --model resnet152 --data-root /path/to/imagenet --output-dir runs/resnet152_bp
-```
+[`experiments/vit_matched_224`](experiments/vit_matched_224/README.md)
+provides a separate controlled BP/LFNN training and checkpoint-evaluation
+pipeline. Within each seed, both methods start from identical shared ViT
+weights, including the newly initialized positional embedding. Both use
+224 x 224 inputs, 90 epochs, global batch size 256, and SGD with initial
+learning rate 0.001, momentum 0.9, weight decay 0.0005, and cosine
+`T_max=90, eta_min=0`.
+
+The LFNN arm has four consecutive three-transformer-layer workers, three
+auxiliary heads, and activation detachment between workers. Its four
+minibatch-mean cross-entropies are averaged (weight 0.25 each); BP uses
+the final cross-entropy with weight 1. This is the delta=100% all-leader
+control and does not test partial leadership or follower alignment.
+
+The package includes official validation-label checks, paired initialization
+checks, source/configuration capture, raw metric export, checkpoint reload
+evaluation, and artifact-consistency validation. It contains code and utility
+tests, with no experimental accuracy claims. It does not establish that this
+source produced any previously released logs. See the package README for
+data requirements, execution commands, loss scaling, and the checks actually
+performed before release.
 
 #### 1. LFNN
 Our LFNN codes can be run properly in Google Colab with the links below:
@@ -177,5 +232,6 @@ held-out test set, and interprets processed mask IDs as `0=background`,
 `1=live`, and `2=dead`. It does not merge or remap an injured class. Any
 upstream class conversion used to create the `.npy` masks must be disclosed
 alongside comparisons with E-U-Net.
+
 
 
