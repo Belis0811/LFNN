@@ -1,0 +1,65 @@
+experiment:
+  name: imagenet_resnet101_lfnn_delta75_no_alignment
+  seed: 2026
+  output_dir: runs/imagenet_resnet101_lfnn_delta75_no_alignment
+
+data:
+  root: null
+  train_subdir: train
+  val_subdir: val
+  input_size: 224
+  resize_size: 256
+  num_classes: 1000
+  num_workers: 16
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 2
+  train_scale: [0.08, 1.0]
+  horizontal_flip_probability: 0.5
+  color_jitter: 0.0
+  random_erasing_probability: 0.0
+
+model:
+  architecture: resnet101
+  torchvision_weights: null
+  local_head_hidden_dim: 256
+  detach_between_workers: true
+  detach_output_classifier_input: true
+
+lfnn:
+  leadership_fraction: 0.75
+  leader_rounding: ceil
+  require_followers: true
+  selection_scope: global_minibatch
+  alignment_space: probabilities
+  detach_teacher: true
+  output_loss_weight: 1.0
+  leader_loss_weight: 0.5
+  follower_loss_weight: 0.0
+
+optimization:
+  epochs: 90
+  global_batch_size: 256
+  optimizer: sgd
+  learning_rate: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+  nesterov: true
+  label_smoothing: 0.0
+  scheduler: cosine
+  scheduler_t_max: 90
+  scheduler_eta_min: 0.0
+  gradient_clip_norm: null
+  amp: true
+
+logging:
+  print_frequency: 50
+  trace_every_steps: 1
+  checkpoint_every_epochs: 10
+  save_best: true
+
+runtime:
+  deterministic: false
+  cudnn_benchmark: true
+  sync_batch_norm: false
+

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Hyperparameters and optimization behavior corresponding to the released training logs.",
+  "purpose": "Released training configurations and source locations; historical run mappings and standalone implementations are listed separately.",
   "runs": {
     "cifar10_lfnn_l": {
       "code": "model/LFNN/Cifar10_LFNN_detailed.ipynb",
@@ -147,7 +147,7 @@
       "optimizer": "SGD",
       "learning_rate": 0.1,
       "momentum": 0.9,
-      "weight_decay": 0.00005,
+      "weight_decay": 5e-05,
       "scheduler": "CosineAnnealingLR",
       "scheduler_t_max": 89,
       "eta_min": 0.0001,
@@ -164,11 +164,39 @@
       "optimizer": "SGD",
       "learning_rate": 0.05,
       "momentum": 0.9,
-      "weight_decay": 0.00005,
+      "weight_decay": 5e-05,
       "scheduler": "CosineAnnealingLR",
       "scheduler_t_max": 89,
-      "eta_min": 0.00001,
+      "eta_min": 1e-05,
       "released_log_seed": "not recorded"
+    }
+  },
+  "implementations": {
+    "resnet101_partial_leadership": {
+      "directory": "experiments/resnet101_partial_leadership",
+      "training_script": "experiments/resnet101_partial_leadership/scripts/train_imagenet_lfnn.py",
+      "bp_training_script": "experiments/resnet101_partial_leadership/scripts/train_imagenet_bp.py",
+      "model_source": "experiments/resnet101_partial_leadership/src/lfnnexp/models.py",
+      "selection_and_alignment_source": "experiments/resnet101_partial_leadership/src/lfnnexp/lfnn_loss.py",
+      "configurations": {
+        "delta75": {
+          "path": "experiments/resnet101_partial_leadership/configs/imagenet_resnet101_delta75.yaml",
+          "leadership_fraction": 0.75,
+          "follower_loss_weight": 0.5
+        },
+        "delta75_no_alignment": {
+          "path": "experiments/resnet101_partial_leadership/configs/imagenet_resnet101_delta75_no_alignment.yaml",
+          "leadership_fraction": 0.75,
+          "follower_loss_weight": 0.0
+        },
+        "delta100": {
+          "path": "experiments/resnet101_partial_leadership/configs/imagenet_resnet101_delta100.yaml",
+          "leadership_fraction": 1.0
+        },
+        "matched_bp": {
+          "path": "experiments/resnet101_partial_leadership/configs/imagenet_resnet101_bp.yaml"
+        }
+      }
     }
   }
 }

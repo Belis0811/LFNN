@@ -233,5 +233,11 @@ held-out test set, and interprets processed mask IDs as `0=background`,
 upstream class conversion used to create the `.npy` masks must be disclosed
 alongside comparisons with E-U-Net.
 
+#### ResNet-101 partial leadership
 
-
+The standalone [ResNet-101 partial-leadership implementation](experiments/resnet101_partial_leadership/README.md)
+contains a four-worker model, error-based leader selection, detached-teacher
+follower alignment, and explicit configurations for delta=0.75. It also includes
+no-alignment, all-leader, and matched BP configurations, launch commands,
+checkpoint evaluation, and run-recording utilities. Configuration paths are
+listed separately under `implementations` in `experiment_configs.json`.
